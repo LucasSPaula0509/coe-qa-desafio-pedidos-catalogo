@@ -14,7 +14,7 @@ O oráculo de preço vigente é a massa inicial avaliada no instante da execuç�
 | CT-CAT-004 | Preço apenas futuro | `PROD-005` | `200`; chave `currentPrice` **presente com valor** `null` (ausência da chave diverge do contrato) | RN-08, RN-19, H-09 | PE | P1 | API |
 | CT-CAT-005 | Preço expirado | `PROD-006` | `200`; chave `currentPrice` **presente com valor** `null` | RN-08, RN-19, H-09 | PE | P1 | API |
 | CT-CAT-006 | Produto inexistente | `PROD-999` | `404 PRODUCT_NOT_FOUND` com envelope e `X-Request-Id` | RN-19, RN-23 | PE | P1 | API |
-| CT-CAT-007 | Identificadores incomuns | `PROD%20001`, `%2E%2E%2F`, `prod-001`, ID com 1.000 caracteres | `404 PRODUCT_NOT_FOUND` (ou `400`) com envelope. Nunca `500` nem conteúdo de outro recurso | RN-19, RN-25 | SE | P3 | API |
+| CT-CAT-007 | Identificadores incomuns | `PROD%20001`, `%2E%2E%2F`, `prod-001`, ID com 1.000 caracteres | `404 PRODUCT_NOT_FOUND` (ou `400`) com envelope. Nunca `500` nem conteúdo de outro recurso | RN-19, RN-25, H-12 | SE | P3 | API |
 | CT-CAT-008 | Contrato da consulta individual | `PROD-001` e `PROD-005` | Corpo valida o JSON Schema de produto (campos obrigatórios, tipos, `currentPrice` e `validTo` **obrigatórios**, nulos ou preenchidos, datas ISO-8601); `Content-Type` `application/json` | RN-19, H-09 | CO | P1 | API |
 
 ## B. Consulta em lote (`POST /products/prices`)
@@ -30,7 +30,7 @@ O oráculo de preço vigente é a massa inicial avaliada no instante da execuç�
 | CT-CAT-016 | Lote vazio ou ausente | `{"productIds": []}`, `{"productIds": null}`, `{}` | `400 VALIDATION_ERROR` | RN-20 | VL | P1 | API |
 | CT-CAT-017 | ID em branco no lote | `["PROD-001", ""]`, `["PROD-001", "   "]` | `400 VALIDATION_ERROR` | RN-20 | PE | P2 | API |
 | CT-CAT-018 | IDs duplicados no lote | `["PROD-001", "PROD-001"]` | `400 VALIDATION_ERROR` | RN-20, Q-04, H-06 | PE | P3 | API |
-| CT-CAT-019 | Tipos inválidos no lote | `{"productIds": "PROD-001"}`, `{"productIds": [1, 2]}`, `{"productIds": [{"$ne": null}]}` | `400 VALIDATION_ERROR` com envelope. Nunca `500` nem lista de produtos | RN-20, RN-25, NF-03 | SE | P2 | API |
+| CT-CAT-019 | Tipos inválidos no lote | `{"productIds": "PROD-001"}`, `{"productIds": [1, 2]}`, `{"productIds": [{"$ne": null}]}` | `400 VALIDATION_ERROR` com envelope. Nunca `500` nem lista de produtos | RN-20, RN-25, NF-03, H-03 | SE | P2 | API |
 | CT-CAT-020 | JSON malformado | `{"productIds": [` | `400 VALIDATION_ERROR` com envelope | RN-20, RN-23 | SE | P2 | API |
 | CT-CAT-021 | Catálogo é somente leitura | `POST /products`, `PUT /products/PROD-001`, `PATCH /products/PROD-001`, `DELETE /products/PROD-001` | `405` (ou `404`) com envelope; nenhuma alteração (o `GET` posterior retorna os dados da massa). Nunca `2xx` nem `500` | RN-21, RN-26, H-02 | SE | P2 | API |
-| CT-CAT-022 | Contrato da consulta em lote | Lote do CT-CAT-011 | Corpo valida o JSON Schema de lote (`prices[]`, `notFound[]`, tipos, datas ISO-8601) | RN-20 | CO | P1 | API |
+| CT-CAT-022 | Contrato da consulta em lote | Lote do CT-CAT-011 | Corpo valida o JSON Schema de lote (`prices[]`, `notFound[]`, tipos, datas ISO-8601) | RN-20, H-09 | CO | P1 | API |

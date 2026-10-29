@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Envelope de erro (RN-23, ADR-008 do SUT)",
+  "type": "object",
+  "required": ["error", "requestId"],
+  "properties": {
+    "error": {
+      "type": "object",
+      "required": ["code", "message", "details"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": ["VALIDATION_ERROR", "ORDER_NOT_FOUND", "PRODUCT_NOT_FOUND", "PRODUCT_INACTIVE",
+                   "NO_CURRENT_PRICE", "CATALOG_UNAVAILABLE", "CATALOG_TIMEOUT", "DATABASE_ERROR",
+                   "INVALID_BUSINESS_RULE", "INTERNAL_ERROR", "PAYLOAD_TOO_LARGE"]
+        },
+        "message": {"type": "string", "minLength": 1},
+        "details": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "requestId": {"type": "string", "minLength": 1}
+  }
+}

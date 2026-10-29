@@ -1,0 +1,32 @@
+# Override de teste do ambiente do SUT (ADR-QA-006).
+#
+# Insere um proxy WireMock entre o order-service e o catalog-service para
+# contar chamadas, inspecionar headers e injetar latência/falhas nos casos de
+# integração (CT-INT-004..011, CT-TRV-001). Sem stubs ativos, o proxy é
+# transparente: encaminha tudo ao catálogo real.
+#
+# Altera apenas a variável CATALOG_BASE_URL, já suportada pelo SUT
+# (sut/README.md). Nenhum arquivo de sut/ é modificado.
+#
+# Uso (a partir da raiz do repositório):
+#   docker compose -f sut/docker-compose.yml -f tests/infra/docker-compose.qa.yml up --build -d
+
+services:
+  catalog-proxy:
+    image: wiremock/wiremock:3.9.2
+    command:
+      - --port=8080
+      - --proxy-all=http://catalog-service:8081
+      - --disable-banner
+    ports:
+      - "8089:8080"
+    depends_on:
+      catalog-service:
+        condition: service_started
+
+  order-service:
+    environment:
+      CATALOG_BASE_URL: http://catalog-proxy:8080
+    depends_on:
+      catalog-proxy:
+        condition: service_started

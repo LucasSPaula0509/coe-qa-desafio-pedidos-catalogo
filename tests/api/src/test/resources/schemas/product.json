@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Produto (RN-19, sut/docs/api.md): currentPrice é documentado como presente, com null sem janela vigente",
+  "type": "object",
+  "required": ["id", "name", "description", "status", "currentPrice"],
+  "properties": {
+    "id": {"type": "string"},
+    "name": {"type": "string"},
+    "description": {"type": "string"},
+    "status": {"type": "string", "enum": ["ATIVO", "INATIVO"]},
+    "currentPrice": {"oneOf": [{"type": "null"}, {"$ref": "price.json#"}]}
+  }
+}
