@@ -28,7 +28,7 @@ Estrutura baseada na ISO/IEC/IEEE 29119-3 (plano de teste). A abordagem técnica
 | Performance e carga | NF-01, NF-02 | [performance.md](test-cases/performance.md) |
 | Segurança | NF-03 | [security.md](test-cases/security.md) |
 
-Total: **181 casos** (82 P1, 73 P2, 26 P3). A distribuição detalhada está na [matriz de rastreabilidade](traceability-matrix.md).
+Total: **182 casos** (82 P1, 74 P2, 26 P3). A distribuição detalhada está na [matriz de rastreabilidade](traceability-matrix.md).
 
 ### 2.2 Funcionalidades fora do escopo
 
@@ -39,7 +39,7 @@ Ver [estratégia §2](test-strategy.md#2-escopo): testes unitários e de compone
 | Suíte | Ferramenta | Casos | Execução |
 |---|---|---|---|
 | API + integração + transversais | Java 17, JUnit 5, RestAssured (ADR-QA-002) | 111 | Todo PR (P1/P2); `develop` (P1–P3) |
-| Web E2E | Playwright (ADR-QA-003) | 46 | Todo PR (P1/P2, Chromium); `develop` (P1–P3, 3 navegadores) |
+| Web E2E | Playwright (ADR-QA-003) | 47 | Todo PR (P1/P2, Chromium); `develop` (P1–P3, 3 navegadores) |
 | Performance | k6 (ADR-QA-004) | 8 | Smoke em todo PR; carga na `develop`/release; demais sob demanda |
 | Segurança | RestAssured/Playwright + OWASP ZAP + Trivy | 16 | Todo PR (SEC + ZAP baseline); SCA na `develop` |
 
@@ -107,7 +107,7 @@ Sequência por fase. Cada fase termina com PR revisado para `develop` e só come
 | 1. Estratégia e planejamento | Especificação SDD, estratégia, plano, casos, matriz | ✅ PR `feature/parte-1-estrategia-planejamento` |
 | 2. API | Projeto Maven, cliente/builders, schemas, CT-ORD/CAT/TRV/INT (incluindo injeção de falhas) | Casos P1/P2 automatizados; H-01..H-07 e H-09 confirmadas ou descartadas |
 | 3. Web | Projeto Playwright, helper de i18n, Page Objects, CT-WEB | Casos P1/P2 automatizados, sem instabilidade em 5 execuções seguidas |
-| 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | Esteira verde ou vermelha **só** por defeito conhecido; deploy condicionado |
+| 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | ✅ Esteira com gates G0–G5 e G7 (G6 entra com a segurança); deploy condicionado à severidade das Issues (ADR-QA-007) |
 | 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | Critérios de saída (§5) avaliados e documentados |
 | Dif. | Segurança (CT-SEC + ZAP), guia de governança, dimensionamento, apresentação | Artefatos revisados e publicados |
 

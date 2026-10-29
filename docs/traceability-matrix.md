@@ -8,10 +8,10 @@
 |---|---|
 | Regras funcionais (RN) | 34 |
 | Requisitos não funcionais (NF) | 4 |
-| Questões (Q) / suspeitas (H) | 12 / 17 |
-| Casos de teste | 181 |
+| Questões (Q) / suspeitas (H) | 12 / 18 |
+| Casos de teste | 182 |
 | Cobertura de requisitos (RN/NF com ≥ 1 caso) | 38/38 (100%) |
-| Casos automatizados | 157/181 (87%) |
+| Casos automatizados | 166/182 (91%) |
 
 ### Casos por área e prioridade
 
@@ -23,8 +23,8 @@
 | Integração | [integration.md](test-cases/integration.md) | 15 | 7 / 8 / 0 |
 | Performance | [performance.md](test-cases/performance.md) | 8 | 2 / 3 / 3 |
 | Segurança | [security.md](test-cases/security.md) | 16 | 4 / 7 / 5 |
-| Interface web | [web-e2e.md](test-cases/web-e2e.md) | 46 | 14 / 21 / 11 |
-| **Total** | | **181** | **82 / 73 / 26** |
+| Interface web | [web-e2e.md](test-cases/web-e2e.md) | 47 | 14 / 22 / 11 |
+| **Total** | | **182** | **82 / 74 / 26** |
 
 ### Casos por nível de execução
 
@@ -33,7 +33,7 @@
 | API | 85 |
 | API+DB | 16 |
 | API+FI | 10 |
-| WEB | 40 |
+| WEB | 41 |
 | WEB+MOCK | 5 |
 | ESTÁTICO | 1 |
 | SEC | 15 |
@@ -71,13 +71,13 @@
 | RN-25 | Semântica HTTP | [CT-CAT-007](test-cases/api-catalog.md), [CT-CAT-019](test-cases/api-catalog.md), [CT-TRV-006](test-cases/api-cross-cutting.md), [CT-TRV-007](test-cases/api-cross-cutting.md), [CT-ORD-044](test-cases/api-orders.md), [CT-ORD-062](test-cases/api-orders.md), [CT-ORD-078](test-cases/api-orders.md), [CT-INT-012](test-cases/integration.md), [CT-SEC-006](test-cases/security.md) | 1 / 7 / 1 |
 | RN-26 | Proteções operacionais sem autenticação | [CT-CAT-021](test-cases/api-catalog.md), [CT-TRV-007](test-cases/api-cross-cutting.md), [CT-SEC-012](test-cases/security.md), [CT-SEC-013](test-cases/security.md) | 0 / 3 / 1 |
 | RN-27 | Saúde | [CT-TRV-008](test-cases/api-cross-cutting.md), [CT-TRV-009](test-cases/api-cross-cutting.md), [CT-SEC-010](test-cases/security.md) | 1 / 2 / 0 |
-| RN-28 | Navegação | [CT-WEB-001](test-cases/web-e2e.md), [CT-WEB-002](test-cases/web-e2e.md), [CT-WEB-003](test-cases/web-e2e.md) | 1 / 1 / 1 |
+| RN-28 | Navegação | [CT-WEB-001](test-cases/web-e2e.md), [CT-WEB-002](test-cases/web-e2e.md), [CT-WEB-003](test-cases/web-e2e.md), [CT-WEB-057](test-cases/web-e2e.md) | 1 / 2 / 1 |
 | RN-29 | Painel | [CT-WEB-010](test-cases/web-e2e.md), [CT-WEB-011](test-cases/web-e2e.md), [CT-WEB-012](test-cases/web-e2e.md), [CT-WEB-013](test-cases/web-e2e.md) | 1 / 1 / 2 |
 | RN-30 | Catálogo | [CT-WEB-020](test-cases/web-e2e.md), [CT-WEB-021](test-cases/web-e2e.md), [CT-WEB-022](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-024](test-cases/web-e2e.md), [CT-WEB-025](test-cases/web-e2e.md), [CT-WEB-026](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md) | 3 / 4 / 1 |
 | RN-31 | Novo pedido | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-031](test-cases/web-e2e.md), [CT-WEB-032](test-cases/web-e2e.md), [CT-WEB-033](test-cases/web-e2e.md), [CT-WEB-034](test-cases/web-e2e.md), [CT-WEB-035](test-cases/web-e2e.md), [CT-WEB-036](test-cases/web-e2e.md), [CT-WEB-037](test-cases/web-e2e.md), [CT-WEB-038](test-cases/web-e2e.md), [CT-WEB-039](test-cases/web-e2e.md), [CT-WEB-040](test-cases/web-e2e.md), [CT-WEB-041](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-044](test-cases/web-e2e.md), [CT-WEB-045](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md) | 6 / 10 / 1 |
 | RN-32 | Pedidos | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md), [CT-WEB-052](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-054](test-cases/web-e2e.md), [CT-WEB-055](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md) | 3 / 3 / 2 |
-| RN-33 | Idiomas | [CT-WEB-001](test-cases/web-e2e.md), [CT-WEB-060](test-cases/web-e2e.md), [CT-WEB-061](test-cases/web-e2e.md), [CT-WEB-062](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md), [CT-WEB-064](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 2 / 3 / 2 |
-| RN-34 | Erros na interface | [CT-WEB-014](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 0 / 6 / 1 |
+| RN-33 | Idiomas | [CT-WEB-001](test-cases/web-e2e.md), [CT-WEB-057](test-cases/web-e2e.md), [CT-WEB-060](test-cases/web-e2e.md), [CT-WEB-061](test-cases/web-e2e.md), [CT-WEB-062](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md), [CT-WEB-064](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 2 / 4 / 2 |
+| RN-34 | Erros na interface | [CT-WEB-057](test-cases/web-e2e.md), [CT-WEB-014](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 0 / 7 / 1 |
 | NF-01 | Desempenho (SLO proposto) | [CT-PRF-001](test-cases/performance.md), [CT-PRF-002](test-cases/performance.md), [CT-PRF-003](test-cases/performance.md), [CT-PRF-006](test-cases/performance.md), [CT-PRF-008](test-cases/performance.md) | 2 / 2 / 1 |
 | NF-02 | Estabilidade sob carga | [CT-PRF-003](test-cases/performance.md), [CT-PRF-004](test-cases/performance.md), [CT-PRF-005](test-cases/performance.md), [CT-PRF-007](test-cases/performance.md) | 0 / 2 / 2 |
 | NF-03 | Segurança de entrada e exposição | [CT-CAT-019](test-cases/api-catalog.md), [CT-TRV-002](test-cases/api-cross-cutting.md), [CT-TRV-009](test-cases/api-cross-cutting.md), [CT-SEC-002](test-cases/security.md), [CT-SEC-003](test-cases/security.md), [CT-SEC-004](test-cases/security.md), [CT-SEC-006](test-cases/security.md), [CT-SEC-007](test-cases/security.md), [CT-SEC-008](test-cases/security.md), [CT-SEC-009](test-cases/security.md), [CT-SEC-010](test-cases/security.md), [CT-SEC-011](test-cases/security.md), [CT-SEC-014](test-cases/security.md), [CT-SEC-015](test-cases/security.md), [CT-SEC-016](test-cases/security.md) | 4 / 7 / 4 |
@@ -118,6 +118,7 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | H-15 | A paginação da listagem transborda: com muitas páginas, os primeiros links (e a seta "anterior") ficam fora… | [CT-WEB-051](test-cases/web-e2e.md) |
 | H-16 | No detalhe do pedido, a região rolável da tabela de itens não é acessível por teclado. | [CT-WEB-070](test-cases/web-e2e.md) |
 | H-17 | Em espanhol, valores de 4 dígitos são agrupados (3.500,00 BRL), divergindo da regra do CLDR para es (3500,0… | [CT-WEB-061](test-cases/web-e2e.md) |
+| H-18 | O front-end fica inoperante quando servido por HTTP fora de localhost (ex.: homologação ou intranet): exibe… | [CT-WEB-057](test-cases/web-e2e.md) |
 
 ## Casos → requisitos e automação
 
@@ -234,14 +235,14 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | [CT-INT-013](test-cases/integration.md) | Jornada de API ponta a ponta | RN-15, RN-16, RN-17, RN-18 | P1 | API | ✅ Automatizado |
 | [CT-INT-014](test-cases/integration.md) | Criação concorrente | RN-12, RN-13, RN-15 | P2 | API | ✅ Automatizado |
 | [CT-INT-015](test-cases/integration.md) | Catálogo inacessível (destino fora do ar) | RN-10, RN-07, Q-12 | P1 | API+FI | ✅ Automatizado |
-| [CT-PRF-001](test-cases/performance.md) | Smoke de performance | NF-01, Q-06 | P1 | PERF | ⏳ Planejado |
-| [CT-PRF-002](test-cases/performance.md) | Carga nominal | NF-01, Q-06 | P1 | PERF | ⏳ Planejado |
-| [CT-PRF-003](test-cases/performance.md) | Estresse (ponto de saturação) | NF-01, NF-02, Q-06 | P2 | PERF | ⏳ Planejado |
-| [CT-PRF-004](test-cases/performance.md) | Pico (spike) | NF-02, Q-06 | P2 | PERF | ⏳ Planejado |
-| [CT-PRF-005](test-cases/performance.md) | Resistência (soak) | NF-02, Q-06 | P3 | PERF | ⏳ Planejado |
-| [CT-PRF-006](test-cases/performance.md) | Criação independente do número de itens (anti-N+1) | NF-01, RN-09, Q-06 | P3 | PERF | ⏳ Planejado |
-| [CT-PRF-007](test-cases/performance.md) | Degradação da dependência | NF-02, RN-11, Q-06 | P3 | PERF | ⏳ Planejado |
-| [CT-PRF-008](test-cases/performance.md) | Listagem com volume | NF-01, RN-17, Q-06 | P2 | PERF | ⏳ Planejado |
+| [CT-PRF-001](test-cases/performance.md) | Smoke de performance | NF-01, Q-06 | P1 | PERF | ✅ Automatizado |
+| [CT-PRF-002](test-cases/performance.md) | Carga nominal | NF-01, Q-06 | P1 | PERF | ✅ Automatizado |
+| [CT-PRF-003](test-cases/performance.md) | Estresse (ponto de saturação) | NF-01, NF-02, Q-06 | P2 | PERF | ✅ Automatizado |
+| [CT-PRF-004](test-cases/performance.md) | Pico (spike) | NF-02, Q-06 | P2 | PERF | ✅ Automatizado |
+| [CT-PRF-005](test-cases/performance.md) | Resistência (soak) | NF-02, Q-06 | P3 | PERF | ✅ Automatizado |
+| [CT-PRF-006](test-cases/performance.md) | Criação independente do número de itens (anti-N+1) | NF-01, RN-09, Q-06 | P3 | PERF | ✅ Automatizado |
+| [CT-PRF-007](test-cases/performance.md) | Degradação da dependência | NF-02, RN-11, Q-06 | P3 | PERF | ✅ Automatizado |
+| [CT-PRF-008](test-cases/performance.md) | Listagem com volume | NF-01, RN-17, Q-06 | P2 | PERF | ✅ Automatizado |
 | [CT-SEC-001](test-cases/security.md) | Manipulação de preço e total pelo cliente (*mass assignment*) | RN-05 | P1 | SEC | ⏳ Planejado |
 | [CT-SEC-002](test-cases/security.md) | Injeção SQL em parâmetros do order-service | NF-03, RN-23 | P1 | SEC | ⏳ Planejado |
 | [CT-SEC-003](test-cases/security.md) | Injeção NoSQL no catalog-service | NF-03, RN-20 | P1 | SEC | ⏳ Planejado |
@@ -261,6 +262,7 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | [CT-WEB-001](test-cases/web-e2e.md) | Idioma padrão na primeira visita | RN-33, RN-28, Q-11 | P1 | WEB | ✅ Automatizado |
 | [CT-WEB-002](test-cases/web-e2e.md) | Navegação pelo menu lateral | RN-28 | P2 | WEB | ✅ Automatizado |
 | [CT-WEB-003](test-cases/web-e2e.md) | Rota inexistente | RN-28 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-057](test-cases/web-e2e.md) | Aplicação operante quando acessada por nome de host via HTTP (fora de localhost) | RN-28, RN-33, RN-34, H-18 | P2 | WEB | ✅ Automatizado |
 | [CT-WEB-010](test-cases/web-e2e.md) | Indicadores coerentes com a API | RN-29 | P1 | WEB | ✅ Automatizado |
 | [CT-WEB-011](test-cases/web-e2e.md) | Atalhos do painel | RN-29 | P2 | WEB | ✅ Automatizado |
 | [CT-WEB-012](test-cases/web-e2e.md) | Aviso de indicadores indisponíveis | RN-29 | P3 | WEB | ✅ Automatizado |
