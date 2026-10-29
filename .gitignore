@@ -11,6 +11,7 @@ blob-report/
 allure-results/
 allure-report/
 reports/
+tests/performance/results/
 *.jfr
 
 # Segredos e configuração local
