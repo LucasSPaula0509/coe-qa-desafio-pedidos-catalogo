@@ -48,14 +48,14 @@ Para restaurar a massa original do ambiente, use `docker compose -f sut/docker-c
 | `db` | Prepara ou verifica dados direto no PostgreSQL/MongoDB (sempre com restauração) |
 | `fault` | Usa o proxy de injeção de falhas |
 | `serial` | Altera estado global (regra de desconto, produto, proxy). Não paralelizar |
-| `defeito-conhecido` | Reproduz um defeito confirmado (`@KnownDefect("H-xx")`). Continua executando e falhando (estratégia §12) |
+| `defeito-conhecido` | Reproduz um defeito registrado (`@KnownDefect(value = "<nº da Issue>", suspicion = "H-xx")`). Continua executando e falhando (estratégia §12) |
 
 ## Relatórios
 
 | Saída | Local | Uso |
 |---|---|---|
 | JUnit XML | `target/surefire-reports/` | Gate do CI e resumo (`node scripts/summarize-junit.mjs tests/api/target/surefire-reports`) |
-| Allure | `target/allure-results/` | Relatório navegável: `npx allure-commandline serve target/allure-results`. Cada requisição e resposta vira anexo, e os defeitos conhecidos têm link para a busca de Issues pela H |
+| Allure | `target/allure-results/` | Relatório navegável: `npx allure-commandline serve target/allure-results`. Cada requisição e resposta vira anexo, e os defeitos conhecidos têm link direto para a Issue |
 
 ## Estrutura
 
