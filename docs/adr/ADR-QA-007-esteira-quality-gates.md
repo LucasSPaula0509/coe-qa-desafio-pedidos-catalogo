@@ -22,8 +22,8 @@ Workflow único (`.github/workflows/quality-gates.yml`), disparado em PR, em pus
 | G3 | `g3-api` | Sim | `mvn test -DexcludedGroups=defeito-conhecido` |
 | G4 | `g4-web` | Sim | Playwright na **imagem oficial 1.48.2** (sem download de navegador: mitigação da ADR-QA-003), rede do host, `--grep-invert @defeito-conhecido` |
 | G5 | `g5-performance` | Sim | k6 em container: smoke em todo PR; carga nominal em push para `develop`/`main`; qualquer cenário sob demanda |
-| G6 | — | — | Segurança: entra com a suíte de segurança (Parte diferenciais) |
-| G7 | `g7-deploy` | Sim | Depende de G0–G5 e consulta as Issues: **defeito S1/S2 aberto sem o label `excecao-aprovada` bloqueia o deploy** (simulado) |
+| G6 | `g6-security` | Sim | Testes de segurança da API (`-Dgroups=security`) e da interface (`@security`), sem defeitos conhecidos; defeitos conhecidos de segurança em passo não bloqueante. DAST e SCA fora do escopo por decisão do responsável |
+| G7 | `g7-deploy` | Sim | Depende de G0–G6 e consulta as Issues: **defeito S1/S2 aberto sem o label `excecao-aprovada` bloqueia o deploy** (simulado) |
 
 **Defeitos conhecidos:** em G3 e G4, os testes marcados como defeito conhecido rodam num passo próprio, **não bloqueante**, com resultado no resumo do job e nos artefatos. O bloqueio por esses defeitos acontece no G7, **pela severidade da Issue**, e não pela falha do teste. Assim:
 

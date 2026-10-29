@@ -6,7 +6,7 @@
 #      prontidão + aquecimento)
 #   G3 API + integração            G4 web E2E (Chromium, imagem oficial do Playwright)
 #   G5 performance (smoke em todo PR; carga nominal na develop/main)
-#   G6 segurança                   → adicionado com a suíte de segurança (Parte diferenciais)
+#   G6 segurança (testes de segurança da API e da interface; OWASP API Top 10 / Top 10)
 #   G7 decisão de deploy: depende de todos os gates e bloqueia com defeito S1/S2 aberto
 #
 # Política de defeitos conhecidos (estratégia §12): os testes marcados como defeito-conhecido
@@ -92,12 +92,12 @@ jobs:
       - name: G2 · Prontidão e aquecimento
         run: bash scripts/wait-for-sut.sh 300
       - name: Gate — suíte de API sem defeitos conhecidos
-        run: mvn -B -f tests/api/pom.xml test -DexcludedGroups=defeito-conhecido
+        run: mvn -B -f tests/api/pom.xml test -DexcludedGroups=defeito-conhecido,security
       - name: Defeitos conhecidos (não bloqueante; avaliado no G7)
         if: always()
         continue-on-error: true
         run: >-
-          mvn -B -f tests/api/pom.xml test -Dgroups=defeito-conhecido
+          mvn -B -f tests/api/pom.xml test -Dgroups=defeito-conhecido -DexcludedGroups=security
           -Dsurefire.reportsDirectory=target/known-defects-reports
       - name: Resumo
         if: always()
@@ -147,7 +147,7 @@ jobs:
           -v "$DOCKER_BIN:/usr/bin/docker:ro" -v "$COMPOSE_PLUGIN_DIR:/usr/libexec/docker/cli-plugins:ro"
           -e CI=true
           "$PLAYWRIGHT_IMAGE"
-          bash -c "npm ci && npx playwright test --project=chromium --grep-invert @defeito-conhecido"
+          bash -c "npm ci && npx playwright test --project=chromium --grep-invert '@defeito-conhecido|@security'"
       - name: Defeitos conhecidos (não bloqueante; avaliado no G7)
         if: always()
         continue-on-error: true
@@ -159,7 +159,7 @@ jobs:
           -e CI=true
           -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-results/known-defects-junit.xml
           "$PLAYWRIGHT_IMAGE"
-          bash -c "npx playwright test --project=chromium --grep @defeito-conhecido --output=test-results/known-defects --reporter=list,junit"
+          bash -c "npx playwright test --project=chromium --grep @defeito-conhecido --grep-invert @security --output=test-results/known-defects --reporter=list,junit"
       - name: Resumo
         if: always()
         run: |
@@ -211,9 +211,69 @@ jobs:
           path: tests/performance/results
           if-no-files-found: ignore
 
+  g6-security:
+    name: G6 · Segurança
+    needs: g1-static
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: G2 · Subir o SUT do zero (com proxy de falhas)
+        run: bash scripts/start-sut.sh
+      - name: G2 · Prontidão e aquecimento
+        run: bash scripts/wait-for-sut.sh 300
+      - name: Gate — segurança das APIs (sem defeitos conhecidos)
+        run: >-
+          mvn -B -f tests/api/pom.xml test -Dgroups=security -DexcludedGroups=defeito-conhecido
+          -Dsurefire.reportsDirectory=target/security-reports
+      - name: Gate — segurança da interface (sem defeitos conhecidos)
+        run: >-
+          docker run --rm --ipc=host --network host
+          -v "$GITHUB_WORKSPACE:/work" -w /work/tests/web -e CI=true
+          -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-results/security-junit.xml
+          "$PLAYWRIGHT_IMAGE"
+          bash -c "npm ci && npx playwright test --project=chromium --grep @security --grep-invert @defeito-conhecido --output=test-results/security --reporter=list,junit"
+      - name: Defeitos conhecidos de segurança (não bloqueante; avaliado no G7)
+        if: always()
+        continue-on-error: true
+        run: |
+          mvn -B -f tests/api/pom.xml test "-Dgroups=security & defeito-conhecido" \
+            -Dsurefire.reportsDirectory=target/security-known-defects-reports
+          docker run --rm --ipc=host --network host \
+            -v "$GITHUB_WORKSPACE:/work" -w /work/tests/web -e CI=true \
+            -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-results/security-known-defects-junit.xml \
+            "$PLAYWRIGHT_IMAGE" \
+            bash -c "npx playwright test --project=chromium --grep '(?=.*@security)(?=.*@defeito-conhecido)' --output=test-results/security-known --reporter=list,junit"
+      - name: Resumo
+        if: always()
+        run: |
+          {
+            node scripts/summarize-junit.mjs tests/api/target/security-reports --failures --markdown "G6 · Segurança das APIs — gate"
+            node scripts/summarize-junit.mjs tests/web/test-results/security-junit.xml --failures --markdown "G6 · Segurança da interface — gate"
+            node scripts/summarize-junit.mjs tests/api/target/security-known-defects-reports --failures --markdown "Segurança (API) — defeitos conhecidos"
+            node scripts/summarize-junit.mjs tests/web/test-results/security-known-defects-junit.xml --failures --markdown "Segurança (interface) — defeitos conhecidos"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Logs do SUT em caso de falha
+        if: failure()
+        run: $COMPOSE logs --no-color > sut-logs.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            tests/api/target/security-reports
+            tests/api/target/security-known-defects-reports
+            tests/web/test-results
+            sut-logs.txt
+          if-no-files-found: ignore
+
   g7-deploy:
     name: G7 · Decisão de deploy
-    needs: [g0-integrity, g1-static, g3-api, g4-web, g5-performance]
+    needs: [g0-integrity, g1-static, g3-api, g4-web, g5-performance, g6-security]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
@@ -234,7 +294,7 @@ jobs:
               echo "**Deploy bloqueado** — defeitos S1/S2 abertos sem exceção aprovada (label \`excecao-aprovada\`):"
               while IFS= read -r issue; do echo "- ${issue}"; done <<< "$blocking"
             else
-              echo "Nenhum defeito S1/S2 aberto sem exceção. Gates G0–G5 aprovados."
+              echo "Nenhum defeito S1/S2 aberto sem exceção. Gates G0–G6 aprovados."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
           if [ -n "$blocking" ]; then

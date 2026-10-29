@@ -9,6 +9,9 @@ public final class TestConfig {
 
     public static final String ORDER_BASE_URL = value("ORDER_BASE_URL", "http://localhost:8080");
     public static final String CATALOG_BASE_URL = value("CATALOG_BASE_URL", "http://localhost:8081");
+    public static final String WEB_BASE_URL = value("WEB_BASE_URL", "http://localhost:4200");
+    /** Container do order-service: os testes de segurança inspecionam o log JSON (CT-SEC-009). */
+    public static final String ORDER_SERVICE_CONTAINER = value("ORDER_SERVICE_CONTAINER", "sut-order-service-1");
     public static final String CATALOG_PROXY_ADMIN_URL = value("CATALOG_PROXY_ADMIN_URL", "http://localhost:8089");
     /** Container do proxy, parado em CT-INT-015 para simular destino inacessível. */
     public static final String CATALOG_PROXY_CONTAINER = value("CATALOG_PROXY_CONTAINER", "sut-catalog-proxy-1");

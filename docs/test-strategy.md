@@ -134,6 +134,8 @@ Abordagem em camadas, sem testes destrutivos:
 2. **DAST** com OWASP ZAP (CT-SEC-015): gate com alertas *High*.
 3. **SCA** das imagens (CT-SEC-016): informativo, porque o SUT não pode ser alterado.
 
+> **Decisão de escopo (2026-10-29):** o responsável pelo projeto retirou as camadas 2 e 3 desta entrega. O gate G6 executa só os testes dirigidos. DAST e SCA ficam como condição para produção no [resumo de qualidade](quality-summary.md).
+
 A ausência de autenticação é **risco aceito no desafio e impeditivo para produção** (ADR-013 do SUT). Essa ressalva vai explícita no resumo de qualidade.
 
 ## 9. Dados de teste
@@ -186,7 +188,7 @@ O *override* usa apenas variáveis de ambiente já suportadas pelo SUT (`sut/REA
 | G3 | Suíte de API e integração (P1 + P2) | ✔ | ✔ (P1–P3) |
 | G4 | Suíte web, Chromium (P1 + P2) | ✔ | ✔ (P1–P3; Firefox/WebKit informativo) |
 | G5 | Performance: smoke (CT-PRF-001) / carga nominal (CT-PRF-002) | smoke | smoke + carga |
-| G6 | Segurança: suíte SEC + ZAP (sem alerta *High*) | ✔ | ✔ |
+| G6 | Segurança: suíte SEC dirigida (API e interface). ZAP fora do escopo por decisão | ✔ | ✔ |
 | G7 | **Decisão de deploy**: o job de deploy depende de G0–G6 (`needs`) e só segue sem defeito S1/S2 aberto, salvo exceção registrada | — | ✔ |
 
 **Política de defeitos conhecidos.** Um teste que reproduz um defeito confirmado **continua executando e falhando visivelmente**. Ele recebe a tag `defeito-conhecido` e o link da Issue. O efeito no gate depende da severidade:

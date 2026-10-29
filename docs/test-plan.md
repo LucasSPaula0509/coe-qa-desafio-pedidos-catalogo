@@ -41,7 +41,7 @@ Ver [estratégia §2](test-strategy.md#2-escopo): testes unitários e de compone
 | API + integração + transversais | Java 17, JUnit 5, RestAssured (ADR-QA-002) | 111 | Todo PR (P1/P2); `develop` (P1–P3) |
 | Web E2E | Playwright (ADR-QA-003) | 48 | Todo PR (P1/P2, Chromium); `develop` (P1–P3, 3 navegadores) |
 | Performance | k6 (ADR-QA-004) | 8 | Smoke em todo PR; carga na `develop`/release; demais sob demanda |
-| Segurança | RestAssured/Playwright + OWASP ZAP + Trivy | 16 | Todo PR (SEC + ZAP baseline); SCA na `develop` |
+| Segurança | RestAssured/Playwright (ZAP e Trivy fora do escopo por decisão) | 16 (14 automatizados) | Todo PR (gate G6) |
 
 ## 4. Critérios de entrada
 
@@ -61,7 +61,7 @@ Ver [estratégia §2](test-strategy.md#2-escopo): testes unitários e de compone
 | Aprovação | 100% dos P1 aprovados, **ou** falhando apenas por defeito registrado (tag `defeito-conhecido`) |
 | Defeitos | Nenhum defeito S1/S2 aberto sem exceção formal aprovada pelo Client Face |
 | Performance | Smoke e carga nominal dentro dos thresholds do NF-01 (ou desvio registrado e aceito) |
-| Segurança | Nenhum alerta *High* do ZAP sem tratamento; achados registrados |
+| Segurança | Testes dirigidos (G6) aprovados ou falhando apenas por defeito registrado; achados registrados. DAST/SCA: condição para produção |
 | Confiabilidade | Taxa de instabilidade < 2% nas últimas 5 execuções do CI |
 | Reporte | Relatório de execução publicado, Issues registradas e resumo de qualidade entregue |
 
@@ -107,9 +107,9 @@ Sequência por fase. Cada fase termina com PR revisado para `develop` e só come
 | 1. Estratégia e planejamento | Especificação SDD, estratégia, plano, casos, matriz | ✅ PR `feature/parte-1-estrategia-planejamento` |
 | 2. API | Projeto Maven, cliente/builders, schemas, CT-ORD/CAT/TRV/INT (incluindo injeção de falhas) | Casos P1/P2 automatizados; H-01..H-07 e H-09 confirmadas ou descartadas |
 | 3. Web | Projeto Playwright, helper de i18n, Page Objects, CT-WEB | Casos P1/P2 automatizados, sem instabilidade em 5 execuções seguidas |
-| 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | ✅ Esteira com gates G0–G5 e G7 (G6 entra com a segurança); deploy condicionado à severidade das Issues (ADR-QA-007) |
-| 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | ✅ Execução de referência no CI; 15 Issues; critérios de saída avaliados no resumo de qualidade (não atendidos: defeitos S2 abertos) |
-| Dif. | Segurança (CT-SEC + ZAP), guia de governança, dimensionamento, apresentação | Artefatos revisados e publicados |
+| 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | ✅ Esteira com gates G0–G7 (G6 adicionado com a segurança); deploy condicionado à severidade das Issues (ADR-QA-007) |
+| 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | ✅ Execução de referência no CI; 15 Issues (19 com a segurança); critérios de saída avaliados no resumo de qualidade (não atendidos: defeitos S2 abertos) |
+| Dif. | Segurança (CT-SEC), guia de governança, dimensionamento, apresentação | Segurança ✅: 14 casos, gate G6, 4 Issues (#25 a #28); DAST/SCA fora do escopo por decisão |
 
 ## 10. Papéis e responsabilidades
 

@@ -8,10 +8,10 @@
 |---|---|
 | Regras funcionais (RN) | 34 |
 | Requisitos não funcionais (NF) | 4 |
-| Questões (Q) / suspeitas (H) | 12 / 18 |
+| Questões (Q) / suspeitas (H) | 12 / 19 |
 | Casos de teste | 183 |
 | Cobertura de requisitos (RN/NF com ≥ 1 caso) | 38/38 (100%) |
-| Casos automatizados | 167/183 (91%) |
+| Casos automatizados | 181/183 (99%) |
 
 ### Casos por área e prioridade
 
@@ -119,6 +119,7 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | H-16 | No detalhe do pedido, a região rolável da tabela de itens não é acessível por teclado. | [CT-WEB-070](test-cases/web-e2e.md) |
 | H-17 | Em espanhol, valores de 4 dígitos são agrupados (3.500,00 BRL), divergindo da regra do CLDR para es (3500,0… | [CT-WEB-061](test-cases/web-e2e.md) |
 | H-18 | O front-end fica inoperante quando servido por HTTP fora de localhost (ex.: homologação ou intranet): exibe… | [CT-WEB-057](test-cases/web-e2e.md) |
+| H-19 | O front-end expõe a versão do servidor (Server: nginx/1.27.5), também nas páginas de erro do nginx. | [CT-SEC-007](test-cases/security.md) |
 
 ## Casos → requisitos e automação
 
@@ -243,20 +244,20 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | [CT-PRF-006](test-cases/performance.md) | Criação independente do número de itens (anti-N+1) | NF-01, RN-09, Q-06 | P3 | PERF | ✅ Automatizado |
 | [CT-PRF-007](test-cases/performance.md) | Degradação da dependência | NF-02, RN-11, Q-06 | P3 | PERF | ✅ Automatizado |
 | [CT-PRF-008](test-cases/performance.md) | Listagem com volume | NF-01, RN-17, Q-06 | P2 | PERF | ✅ Automatizado |
-| [CT-SEC-001](test-cases/security.md) | Manipulação de preço e total pelo cliente (*mass assignment*) | RN-05 | P1 | SEC | ⏳ Planejado |
-| [CT-SEC-002](test-cases/security.md) | Injeção SQL em parâmetros do order-service | NF-03, RN-23 | P1 | SEC | ⏳ Planejado |
-| [CT-SEC-003](test-cases/security.md) | Injeção NoSQL no catalog-service | NF-03, RN-20 | P1 | SEC | ⏳ Planejado |
-| [CT-SEC-004](test-cases/security.md) | XSS armazenado via dados do cliente | NF-03 | P1 | SEC | ⏳ Planejado |
-| [CT-SEC-005](test-cases/security.md) | Limite de payload contornado por *chunked encoding* | RN-06, H-04 | P2 | SEC | ⏳ Planejado |
-| [CT-SEC-006](test-cases/security.md) | Estruturas abusivas | NF-03, RN-25 | P2 | SEC | ⏳ Planejado |
-| [CT-SEC-007](test-cases/security.md) | Vazamento de informação técnica | NF-03, RN-23 | P2 | SEC | ⏳ Planejado |
-| [CT-SEC-008](test-cases/security.md) | Cabeçalhos de segurança do front-end | NF-03, H-08 | P2 | SEC | ⏳ Planejado |
-| [CT-SEC-009](test-cases/security.md) | X-Request-Id abusivo | NF-03, RN-24, H-07 | P3 | SEC | ⏳ Planejado |
-| [CT-SEC-010](test-cases/security.md) | Superfície exposta | NF-03, RN-27 | P2 | SEC | ⏳ Planejado |
-| [CT-SEC-011](test-cases/security.md) | Política de CORS | NF-03 | P3 | SEC | ⏳ Planejado |
-| [CT-SEC-012](test-cases/security.md) | Nenhuma operação destrutiva exposta | RN-26 | P2 | SEC | ⏳ Planejado |
-| [CT-SEC-013](test-cases/security.md) | Identificadores não previsíveis | RN-15, RN-26 | P3 | SEC | ⏳ Planejado |
-| [CT-SEC-014](test-cases/security.md) | Ausência de limitação de taxa | NF-03 | P3 | SEC | ⏳ Planejado |
+| [CT-SEC-001](test-cases/security.md) | Manipulação de preço e total pelo cliente (*mass assignment*) | RN-05 | P1 | SEC | ✅ Automatizado |
+| [CT-SEC-002](test-cases/security.md) | Injeção SQL em parâmetros do order-service | NF-03, RN-23 | P1 | SEC | ✅ Automatizado |
+| [CT-SEC-003](test-cases/security.md) | Injeção NoSQL no catalog-service | NF-03, RN-20 | P1 | SEC | ✅ Automatizado |
+| [CT-SEC-004](test-cases/security.md) | XSS armazenado via dados do cliente | NF-03 | P1 | SEC | ✅ Automatizado |
+| [CT-SEC-005](test-cases/security.md) | Limite de payload contornado por *chunked encoding* | RN-06, H-04 | P2 | SEC | ✅ Automatizado |
+| [CT-SEC-006](test-cases/security.md) | Estruturas abusivas | NF-03, RN-25 | P2 | SEC | ✅ Automatizado |
+| [CT-SEC-007](test-cases/security.md) | Vazamento de informação técnica | NF-03, RN-23, H-19 | P2 | SEC | ✅ Automatizado |
+| [CT-SEC-008](test-cases/security.md) | Cabeçalhos de segurança do front-end | NF-03, H-08 | P2 | SEC | ✅ Automatizado |
+| [CT-SEC-009](test-cases/security.md) | X-Request-Id abusivo | NF-03, RN-24, H-07 | P3 | SEC | ✅ Automatizado |
+| [CT-SEC-010](test-cases/security.md) | Superfície exposta | NF-03, RN-27 | P2 | SEC | ✅ Automatizado |
+| [CT-SEC-011](test-cases/security.md) | Política de CORS | NF-03 | P3 | SEC | ✅ Automatizado |
+| [CT-SEC-012](test-cases/security.md) | Nenhuma operação destrutiva exposta | RN-26 | P2 | SEC | ✅ Automatizado |
+| [CT-SEC-013](test-cases/security.md) | Identificadores não previsíveis | RN-15, RN-26 | P3 | SEC | ✅ Automatizado |
+| [CT-SEC-014](test-cases/security.md) | Ausência de limitação de taxa | NF-03 | P3 | SEC | ✅ Automatizado |
 | [CT-SEC-015](test-cases/security.md) | Varredura dinâmica (DAST) | NF-03 | P2 | DAST | ⏳ Planejado |
 | [CT-SEC-016](test-cases/security.md) | Componentes vulneráveis (SCA) | NF-03 | P3 | SEC | ⏳ Planejado |
 | [CT-WEB-001](test-cases/web-e2e.md) | Idioma padrão na primeira visita | RN-33, RN-28, Q-11 | P1 | WEB | ✅ Automatizado |

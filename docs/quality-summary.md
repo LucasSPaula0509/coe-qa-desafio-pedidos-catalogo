@@ -4,7 +4,7 @@
 |---|---|
 | Versão avaliada | SUT recebido para o desafio (commit `75f5172`, manifesto `sut.sha256`, 219 arquivos) |
 | Período | 2026-10-29 |
-| Base de avaliação | 183 casos de teste (34 regras + 4 requisitos não funcionais, cobertura de 100%), 167 automatizados em 3 suítes (API, web, performance) e executados localmente e na esteira de CI |
+| Base de avaliação | 183 casos de teste (34 regras + 4 requisitos não funcionais, cobertura de 100%), 181 automatizados em API, web, performance e segurança, executados localmente e na esteira de CI |
 | Elaborado por | QA Sênior (autor), com apoio de IA (Claude Code), validado por evidências |
 | Documentos de apoio | [Relatório de execução](test-execution/README.md) · [Defeitos (Issues)](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues?q=label%3Adefeito) · [Estratégia](test-strategy.md) · [Especificação e suspeitas](../specs/open-questions.md) |
 
@@ -48,21 +48,25 @@ O comportamento de maior risco financeiro foi testado com o máximo de rigor e *
 | S3 | [#8](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/8) | O catálogo omite campos que o contrato documenta como `null` (`currentPrice`, `validTo`) |
 | S3 | [#15](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/15) | O diálogo "Descartar pedido?" aparece vazio, e confirmar não sai da tela |
 | S3 | [#20](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/20) | Servida por HTTP fora de `localhost`, a interface fica inoperante, sem mensagem |
+| S3 | [#25](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/25) | Limite de 1 MB do corpo contornado com `Transfer-Encoding: chunked` (consumo de recursos) |
+| S3 | [#26](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/26) | Front-end sem cabeçalhos de segurança (CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy) |
 | S4 — baixa | [#9](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/9) | O lote do catálogo aceita IDs repetidos |
 | S4 | [#10](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/10) | A data de criação do pedido difere entre a criação e a consulta (precisão) |
 | S4 | [#11](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/11) | Requisição rejeitada pelo servidor web devolve HTML, sem o formato padrão de erro |
 | S4 | [#12](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/12) | Exemplos da documentação divergem da massa entregue |
 | S4 | [#17](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/17) | Região rolável do detalhe do pedido sem acesso por teclado (acessibilidade) |
 | S4 | [#18](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/18) | Formatação de valores em espanhol fora da norma do idioma |
+| S4 | [#27](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/27) | `X-Request-Id` enviado pelo cliente é ecoado sem validação |
+| S4 | [#28](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues/28) | Front-end (nginx) expõe a versão do servidor |
 
-**Distribuição:** 15 defeitos, sendo 4 S2, 5 S3 e 6 S4 (nenhum S1). Por componente: front-end 6, integração e `order-service` 3, `catalog-service` 3, os dois serviços 2, documentação 1. Por camada que detectou: suíte de API 9, suíte web 6. A automação de interface encontrou defeitos que nenhum teste de API alcançaria (#14, #15, #16, #20).
+**Distribuição:** 19 defeitos, sendo 4 S2, 7 S3 e 8 S4 (nenhum S1). Por componente: front-end 8, `order-service`/integração 4, `catalog-service` 3, os dois serviços 3, documentação 1. Por camada que detectou: suíte de API 9, suíte web 6, suíte de segurança 4. A automação de interface encontrou defeitos que nenhum teste de API alcançaria (#14, #15, #16, #20).
 
 ## 5. Riscos residuais e observações
 
 | Risco / observação | Situação | Recomendação |
 |---|---|---|
 | **Sem autenticação**: qualquer pessoa com o identificador lê os dados pessoais de um pedido | Decisão de escopo do SUT (ADR-013) | Impeditivo para produção. OAuth2/JWT antes de expor a dados reais |
-| **Segurança ainda não avaliada pela suíte própria** | Suspeitas H-04 (limite de 1 MB contornável), H-07 (`X-Request-Id` sem validação) e H-08 (cabeçalhos de segurança ausentes) **aguardam confirmação** | Executar a suíte de segurança (Parte diferenciais, gate G6) antes do release |
+| **Segurança: proteções principais funcionam** (injeção SQL/NoSQL, XSS, *mass assignment*, CORS, superfície do Actuator), com 4 defeitos (#25 a #28) e **sem limitação de taxa** | Testes dirigidos no gate G6. DAST e análise de componentes (SCA) **fora do escopo** desta entrega, por decisão do responsável | Antes de produção: executar DAST e SCA e incluir limitação de taxa no gateway |
 | **SLOs de desempenho são premissa**, sem homologação | Smoke e carga nominal dentro dos limites com folga ampla (p95 de criação 37 ms × 800 ms), em runner compartilhado | Homologar SLO e volume esperado com o Client Face (Q-06); certificar capacidade em ambiente dedicado |
 | **Resiliência sem prazo total**: um catálogo que responde aos poucos pode segurar a criação do pedido indefinidamente | Comportamento conforme a documentação ("timeout de leitura"), não é defeito | Orçamento de tempo total para a chamada ao catálogo |
 | Rótulos acessíveis da paginação ("Previous"/"Next") em inglês em todos os idiomas | Observação (vem do ng-bootstrap, sem tradução no SUT) | Fornecer as traduções do ng-bootstrap (`$localize`) |
@@ -73,10 +77,10 @@ O comportamento de maior risco financeiro foi testado com o máximo de rigor e *
 | Indicador | Valor |
 |---|---|
 | Cobertura de requisitos (regras com ≥ 1 caso) | **38/38 (100%)** |
-| Casos automatizados | **167/183 (91%)**. Os 16 restantes são da suíte de segurança (diferenciais) |
+| Casos automatizados | **181/183 (99%)**. Os 2 restantes (DAST e SCA) ficaram fora do escopo por decisão |
 | Estabilidade das suítes (local) | 3 execuções completas seguidas, com resultados idênticos, na API e na web. Nenhuma falha sem explicação |
 | Instabilidade (*flakiness*) | 0 testes aprovados só na nova tentativa |
-| Defeitos por severidade | S1: 0 · S2: 4 · S3: 5 · S4: 6 |
+| Defeitos por severidade | S1: 0 · S2: 4 · S3: 7 · S4: 8 |
 | Esteira de CI (execução de referência) | G0–G5 aprovados (API 129/129, web 47/47, smoke e carga dentro dos SLOs); **G7 bloqueou o deploy** pelos 4 defeitos S2, como a política determina ([relatório de execução](test-execution/README.md)) |
 | Consistência local × CI | Mesmo conjunto de falhas nas duas plataformas; todas mapeadas para Issues |
 
