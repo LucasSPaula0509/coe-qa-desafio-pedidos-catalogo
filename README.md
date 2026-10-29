@@ -9,7 +9,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | Parte | Entregável | Status |
 |---|---|---|
 | Estrutura | Repositório, GitFlow, integridade do SUT, ADRs de stack | ✅ Concluída |
-| 1 | Estratégia, plano, especificação (SDD), casos de teste, rastreabilidade | 🔄 Em andamento |
+| 1 | Estratégia, plano, especificação (SDD), 179 casos de teste, rastreabilidade gerada e validada por script | ✅ Concluída |
 | 2 | Automação de API (Java + RestAssured) | ⏳ Planejada |
 | 3 | Automação de front-end (Playwright) | ⏳ Planejada |
 | 4 | Performance (k6) e quality gates no CI/CD | ⏳ Planejada |
@@ -22,7 +22,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 sut/                     Sistema sob teste — NÃO ALTERAR (ver ADR-QA-001)
   docs/                  Base de teste oficial (requisitos, contratos, dados, ADRs do SUT)
 sut.sha256               Manifesto de integridade do SUT (219 arquivos)
-scripts/                 Utilitários (verify-sut-integrity.sh)
+scripts/                 verify-sut-integrity.sh, traceability.mjs
 specs/                   Especificação SDD: regras testáveis (RN), questões e suspeitas (Q/H)
 docs/
   test-strategy.md       Estratégia de testes
@@ -71,7 +71,14 @@ docker compose up --build -d
 
 Para voltar ao estado inicial (massa de dados original), use `docker compose down -v`.
 
-### 3. Executar as suítes
+### 3. Validar a rastreabilidade
+
+```bash
+node scripts/traceability.mjs --check   # valida IDs e confere se a matriz está atualizada
+node scripts/traceability.mjs           # regenera docs/traceability-matrix.md após alterar specs/ ou casos
+```
+
+### 4. Executar as suítes
 
 Instruções adicionadas a cada parte entregue (Partes 2 a 4).
 
@@ -79,6 +86,11 @@ Instruções adicionadas a cada parte entregue (Partes 2 a 4).
 
 | Documento | Conteúdo |
 |---|---|
+| [Especificação (SDD)](specs/README.md) | Processo SDD, [regras testáveis](specs/business-rules.md) (34 RN + 4 NF) e [questões e suspeitas de defeito](specs/open-questions.md) |
+| [Estratégia de testes](docs/test-strategy.md) | Resumo executivo, riscos, pirâmide, técnicas, dados, ambientes, quality gates, defeitos e métricas |
+| [Plano de testes](docs/test-plan.md) | Escopo, critérios de entrada e saída, suspensão, cronograma, papéis, riscos do projeto |
+| [Casos de teste](docs/test-cases/README.md) | 179 casos por área, com técnica, prioridade e nível de execução |
+| [Matriz de rastreabilidade](docs/traceability-matrix.md) | Requisitos ↔ casos ↔ automação (gerada por `scripts/traceability.mjs`) |
 | [Uso de IA](docs/ai-usage.md) | Ferramenta, motivo, prompts, decisões e validações por etapa |
 | [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance) e SDD |
 | [Guia de contribuição](CONTRIBUTING.md) | GitFlow, commits, PRs e registro de defeitos |
