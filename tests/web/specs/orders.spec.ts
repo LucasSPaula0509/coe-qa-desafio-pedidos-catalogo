@@ -33,16 +33,35 @@ test.describe('Pedidos', () => {
     },
   );
 
+  test('CT-WEB-051 — paginação da listagem', { tag: ['@P2'] }, async ({ orderList, ordersApi }) => {
+    await ordersApi.ensureAtLeast(21);
+    await orderList.goto();
+    await expect(orderList.pagination()).toBeVisible();
+
+    // Controle "próxima": navegação válida em qualquer volume (o alcance dos links numéricos com
+    // muitas páginas é verificado no CT-WEB-058).
+    await orderList.nextPageLink().click();
+
+    const secondPage = await ordersApi.list(1, 20);
+    await expect.poll(() => orderList.displayedIds()).toEqual(secondPage.content.map((order) => order.id));
+  });
+
   test(
-    'CT-WEB-051 — paginação da listagem',
+    'CT-WEB-058 — com volume, todos os links de página ficam ao alcance',
     knownDefect('16', 'H-15', '@P2'),
     async ({ orderList, ordersApi }) => {
-      await ordersApi.ensureAtLeast(21);
+      test.setTimeout(240_000);
+      await ordersApi.ensureAtLeast(1000);
+      const { totalPages } = await ordersApi.list(0, 20);
       await orderList.goto();
       await expect(orderList.pagination()).toBeVisible();
 
+      for (const pageNumber of ['1', '2', String(totalPages)]) {
+        const link = orderList.pagination().getByText(pageNumber, { exact: true });
+        await link.scrollIntoViewIfNeeded();
+        await expect(link, `link da página ${pageNumber} de ${totalPages} visível na tela`).toBeInViewport();
+      }
       await orderList.pagination().getByRole('link', { name: '2', exact: true }).click();
-
       const secondPage = await ordersApi.list(1, 20);
       await expect.poll(() => orderList.displayedIds()).toEqual(secondPage.content.map((order) => order.id));
     },

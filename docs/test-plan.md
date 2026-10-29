@@ -28,7 +28,7 @@ Estrutura baseada na ISO/IEC/IEEE 29119-3 (plano de teste). A abordagem técnica
 | Performance e carga | NF-01, NF-02 | [performance.md](test-cases/performance.md) |
 | Segurança | NF-03 | [security.md](test-cases/security.md) |
 
-Total: **182 casos** (82 P1, 74 P2, 26 P3). A distribuição detalhada está na [matriz de rastreabilidade](traceability-matrix.md).
+Total: **183 casos** (82 P1, 75 P2, 26 P3). A distribuição detalhada está na [matriz de rastreabilidade](traceability-matrix.md).
 
 ### 2.2 Funcionalidades fora do escopo
 
@@ -39,7 +39,7 @@ Ver [estratégia §2](test-strategy.md#2-escopo): testes unitários e de compone
 | Suíte | Ferramenta | Casos | Execução |
 |---|---|---|---|
 | API + integração + transversais | Java 17, JUnit 5, RestAssured (ADR-QA-002) | 111 | Todo PR (P1/P2); `develop` (P1–P3) |
-| Web E2E | Playwright (ADR-QA-003) | 47 | Todo PR (P1/P2, Chromium); `develop` (P1–P3, 3 navegadores) |
+| Web E2E | Playwright (ADR-QA-003) | 48 | Todo PR (P1/P2, Chromium); `develop` (P1–P3, 3 navegadores) |
 | Performance | k6 (ADR-QA-004) | 8 | Smoke em todo PR; carga na `develop`/release; demais sob demanda |
 | Segurança | RestAssured/Playwright + OWASP ZAP + Trivy | 16 | Todo PR (SEC + ZAP baseline); SCA na `develop` |
 

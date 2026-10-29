@@ -69,11 +69,12 @@ export class OrdersApi {
     return (await response.json()) as OrderPage;
   }
 
-  /** Garante ao menos {@code minimum} pedidos no ambiente (para cenários de paginação). */
-  async ensureAtLeast(minimum: number): Promise<void> {
+  /** Garante ao menos {@code minimum} pedidos no ambiente (cenários de paginação), em lotes paralelos. */
+  async ensureAtLeast(minimum: number, concurrency = 10): Promise<void> {
     const { totalElements } = await this.list(0, 1);
-    for (let i = totalElements; i < minimum; i++) {
-      await this.create([['PROD-002', 1]]);
+    for (let missing = minimum - totalElements; missing > 0; missing -= concurrency) {
+      const batch = Math.min(concurrency, missing);
+      await Promise.all(Array.from({ length: batch }, () => this.create([['PROD-002', 1]])));
     }
   }
 }
