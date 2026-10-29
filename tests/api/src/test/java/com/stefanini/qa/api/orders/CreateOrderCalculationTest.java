@@ -157,7 +157,7 @@ class CreateOrderCalculationTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-ORD-017 — pedido criado fica persistido e idêntico na consulta")
-    @KnownDefect("H-10")
+    @KnownDefect(value = "10", suspicion = "H-10")
     void createdOrderIsPersistedIdentically() {
         Response created = Orders.createAccepted(OrderPayload.of(TestClient.unique()).item(NOTEBOOK, 2).item(MOUSE, 1));
 

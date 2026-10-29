@@ -82,7 +82,7 @@ class CatalogResilienceTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-INT-006 — catálogo derruba a conexão → 503 CATALOG_UNAVAILABLE e recuperação sem reinício")
-    @KnownDefect("H-11")
+    @KnownDefect(value = "5", suspicion = "H-11")
     void catalogUnavailableAndRecovery() {
         TestClient client = TestClient.unique();
         CatalogProxy.failPricesWithConnectionReset();
@@ -100,7 +100,7 @@ class CatalogResilienceTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-INT-007 — catálogo lento além do limite (5 s) → 504 CATALOG_TIMEOUT")
-    @KnownDefect("H-11")
+    @KnownDefect(value = "5", suspicion = "H-11")
     void catalogSlowerThanTimeout() {
         TestClient client = TestClient.unique();
         CatalogProxy.delayPrices(5_000);

@@ -156,7 +156,7 @@ class ListOrdersTest {
     @ParameterizedTest(name = "CT-ORD-078 — parâmetro de paginação não numérico {0} → 400 com envelope, nunca 500")
     @ValueSource(strings = {"page=abc", "size=1e3"})
     @Tag("P2")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void nonNumericPaginationParameter(String parameter) {
         String[] pair = parameter.split("=");
 

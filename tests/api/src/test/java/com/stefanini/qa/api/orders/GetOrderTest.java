@@ -47,7 +47,7 @@ class GetOrderTest {
     @ParameterizedTest(name = "CT-ORD-062 — identificador com formato inválido \"{0}\" → 4xx com envelope, nunca 500")
     @ValueSource(strings = {"abc", "123", "PROD-001"})
     @Tag("P2")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void malformedIdentifier(String id) {
         Response response = Orders.get(id);
 

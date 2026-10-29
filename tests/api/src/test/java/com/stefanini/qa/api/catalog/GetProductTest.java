@@ -49,7 +49,7 @@ class GetProductTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-CAT-001 — produto ativo com preço vigente (validTo presente com valor null)")
-    @KnownDefect("H-09")
+    @KnownDefect(value = "8", suspicion = "H-09")
     void activeProductWithCurrentPrice() {
         Response response = get(NOTEBOOK);
 
@@ -89,7 +89,7 @@ class GetProductTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-CAT-004 — preço apenas futuro: currentPrice presente com valor null")
-    @KnownDefect("H-09")
+    @KnownDefect(value = "8", suspicion = "H-09")
     void futurePriceOnly() {
         assertCurrentPriceIsExplicitNull(WEBCAM_FUTURE_PRICE);
     }
@@ -97,7 +97,7 @@ class GetProductTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-CAT-005 — preço expirado: currentPrice presente com valor null")
-    @KnownDefect("H-09")
+    @KnownDefect(value = "8", suspicion = "H-09")
     void expiredPrice() {
         assertCurrentPriceIsExplicitNull(HEADSET_EXPIRED_PRICE);
     }
@@ -112,7 +112,7 @@ class GetProductTest {
     @ParameterizedTest(name = "CT-CAT-007 — identificador incomum \"{0}\" → 4xx com envelope, nunca 500")
     @ValueSource(strings = {"PROD%20001", "%2E%2E%2F", "prod-001", "LONG"})
     @Tag("P3")
-    @KnownDefect("H-12")
+    @KnownDefect(value = "11", suspicion = "H-12")
     void unusualIdentifiers(String rawId) {
         String id = "LONG".equals(rawId) ? "X".repeat(1000) : rawId;
 
@@ -124,7 +124,7 @@ class GetProductTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-CAT-008 — contrato da consulta individual (currentPrice e validTo obrigatórios)")
-    @KnownDefect("H-09")
+    @KnownDefect(value = "8", suspicion = "H-09")
     void singleProductContract() {
         for (String id : new String[] {NOTEBOOK, WEBCAM_FUTURE_PRICE}) {
             Response response = get(id);

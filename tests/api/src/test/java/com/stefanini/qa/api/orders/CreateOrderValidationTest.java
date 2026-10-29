@@ -176,7 +176,7 @@ class CreateOrderValidationTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-ORD-032 — 100 itens distintos passam na validação (422 pelos inexistentes, nunca 5xx)")
-    @KnownDefect("H-01")
+    @KnownDefect(value = "4", suspicion = "H-01")
     void oneHundredItemsAreAcceptedByValidation() {
         assertProductNotFoundForMissing(97);
     }
@@ -228,7 +228,7 @@ class CreateOrderValidationTest {
     @ParameterizedTest(name = "CT-ORD-036 — quantidade com tipo não inteiro: {0}")
     @MethodSource("nonIntegerQuantities")
     @Tag("P2")
-    @KnownDefect("H-03")
+    @KnownDefect(value = "7", suspicion = "H-03")
     void nonIntegerQuantityIsRejected(String variation, Object quantity) {
         TestClient client = TestClient.unique();
         Response response = Orders.create(OrderPayload.of(client).item(MOUSE, quantity).build());
@@ -326,7 +326,7 @@ class CreateOrderValidationTest {
     @Test
     @Tag("P2")
     @DisplayName("CT-ORD-044 — Content-Type não suportado (text/plain) → 4xx com envelope, nunca 500")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void unsupportedContentType() {
         TestClient client = TestClient.unique();
         Response response = Api.orders().contentType("text/plain")

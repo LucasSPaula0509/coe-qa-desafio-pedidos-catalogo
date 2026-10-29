@@ -75,7 +75,7 @@ class CrossCuttingTest {
     @MethodSource("documentedErrors")
     @Tag("P1")
     @Tag("fault")
-    @KnownDefect("H-11")
+    @KnownDefect(value = "5", suspicion = "H-11")
     void documentedErrorsUseTheEnvelope(String trigger, int status, String code, Supplier<Response> call) {
         assertError(call.get(), status, code);
     }
@@ -157,7 +157,7 @@ class CrossCuttingTest {
     @ParameterizedTest(name = "CT-TRV-006 — rota inexistente {0} {2} → 404 com envelope")
     @MethodSource("unknownRoutes")
     @Tag("P2")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void unknownRouteReturns404(String service, Supplier<RequestSpecification> api, String path) {
         assertClientError(api.get().get(path), 404);
     }
@@ -171,7 +171,7 @@ class CrossCuttingTest {
     @ParameterizedTest(name = "CT-TRV-007 — método {0} não suportado (no recurso /orders/<id>: {1}) → 405 com envelope")
     @MethodSource("unsupportedMethods")
     @Tag("P2")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void unsupportedMethodsAreRejected(String method, boolean onResource) {
         Response created = Orders.createSimple();
         String id = created.jsonPath().getString("id");
@@ -202,7 +202,7 @@ class CrossCuttingTest {
     @ParameterizedTest(name = "CT-TRV-009 — Actuator não expõe {2}: {0}")
     @MethodSource("hiddenActuatorEndpoints")
     @Tag("P2")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void actuatorExposesOnlyHealthAndInfo(String service, Supplier<RequestSpecification> api, String path) {
         Response response = api.get().get(path);
 

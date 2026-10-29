@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 import org.junit.jupiter.api.Tag;
 
 /**
- * Marca um teste que reproduz um defeito confirmado (specs/open-questions.md). Política da
+ * Marca um teste que reproduz um defeito confirmado e registrado como Issue. Política da
  * estratégia (§12): o teste continua executando e falhando visivelmente; nunca é desativado.
  * A tag "defeito-conhecido" permite ao gate de CI avaliar a falha pela severidade do defeito, e o
- * link no relatório Allure aponta para a Issue correspondente.
+ * relatório Allure ganha o link para a Issue (allure.link.issue.pattern).
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
@@ -19,6 +19,9 @@ import org.junit.jupiter.api.Tag;
 @LinkAnnotation(type = "issue")
 public @interface KnownDefect {
 
-    /** Identificador da suspeita confirmada (ex.: "H-11"). */
+    /** Número da Issue do defeito no GitHub (ex.: "5"). */
     String value();
+
+    /** Suspeita confirmada na especificação (specs/open-questions.md), ex.: "H-11". */
+    String suspicion();
 }

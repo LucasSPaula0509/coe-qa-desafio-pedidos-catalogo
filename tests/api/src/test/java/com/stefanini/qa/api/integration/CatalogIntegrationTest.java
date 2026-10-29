@@ -56,7 +56,7 @@ class CatalogIntegrationTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-INT-012 — pedido com 51 produtos distintos (acima do lote do catálogo) → 422, nunca 503")
-    @KnownDefect("H-01")
+    @KnownDefect(value = "4", suspicion = "H-01")
     void fiftyOneDistinctProducts() {
         TestClient client = TestClient.unique();
         OrderPayload payload = OrderPayload.of(client).item(NOTEBOOK, 1).item(MOUSE, 1).item(KEYBOARD, 1);

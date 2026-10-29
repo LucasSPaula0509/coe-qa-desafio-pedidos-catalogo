@@ -147,7 +147,7 @@ class BatchPricesTest {
     @Test
     @Tag("P3")
     @DisplayName("CT-CAT-018 — IDs duplicados no lote → 400 (Q-04)")
-    @KnownDefect("H-06")
+    @KnownDefect(value = "9", suspicion = "H-06")
     void duplicatedIdsInBatch() {
         assertError(prices(List.of(NOTEBOOK, NOTEBOOK)), 400, "VALIDATION_ERROR");
     }
@@ -162,7 +162,7 @@ class BatchPricesTest {
     @ParameterizedTest(name = "CT-CAT-019 — tipo inválido no lote: {0} → 400")
     @MethodSource("invalidTypes")
     @Tag("P2")
-    @KnownDefect("H-03")
+    @KnownDefect(value = "7", suspicion = "H-03")
     void invalidTypesInBatch(String variation, String body) {
         Response response = Api.products().body(body).post("/prices");
 
@@ -186,7 +186,7 @@ class BatchPricesTest {
     @ParameterizedTest(name = "CT-CAT-021 — catálogo somente leitura: {0} /products{1} → 405/404 com envelope")
     @MethodSource("writeAttempts")
     @Tag("P2")
-    @KnownDefect("H-02")
+    @KnownDefect(value = "6", suspicion = "H-02")
     void catalogIsReadOnly(String method, String path) {
         Response response = Api.products().body("{\"name\": \"Alterado\"}").request(method, path);
 
@@ -198,7 +198,7 @@ class BatchPricesTest {
     @Test
     @Tag("P1")
     @DisplayName("CT-CAT-022 — contrato da consulta em lote")
-    @KnownDefect("H-09")
+    @KnownDefect(value = "8", suspicion = "H-09")
     void batchContract() {
         List<String> ids = new ArrayList<>(ALL_SEED_PRODUCTS);
         ids.add(MISSING);
