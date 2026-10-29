@@ -1,6 +1,6 @@
 # Suíte de Testes da Interface Web (E2E)
 
-Automação dos casos `CT-WEB` ([docs/test-cases/web-e2e.md](../../docs/test-cases/web-e2e.md)): **47 casos, 52 execuções** (casos de idioma rodam por idioma). Stack: Playwright 1.48.2 + TypeScript, axe-core para acessibilidade ([ADR-QA-003](../../docs/adr/ADR-QA-003-stack-testes-web.md)).
+Automação dos casos `CT-WEB` ([docs/test-cases/web-e2e.md](../../docs/test-cases/web-e2e.md)): **48 casos, 53 execuções** (casos de idioma rodam por idioma). Stack: Playwright 1.48.2 + TypeScript, axe-core para acessibilidade ([ADR-QA-003](../../docs/adr/ADR-QA-003-stack-testes-web.md)).
 
 ## Pré-requisitos
 
@@ -80,7 +80,7 @@ specs/                 Um arquivo por área de docs/test-cases/web-e2e.md
 |---|---|---|---|---|
 | Completa (3 execuções seguidas) | 51 | 46 | 5, **todas** `@defeito-conhecido`, conjunto idêntico nas 3 | ~3 min |
 
-Atualização (Parte 4): o CT-WEB-057 (acesso por nome de host via HTTP, H-18 / #20) foi adicionado ao executar a suíte em container. Ele é um `@defeito-conhecido`, então a visão do gate continua 46/46.
+Atualização (Parte 4): o CT-WEB-057 (acesso por nome de host via HTTP, H-18 / #20) foi adicionado ao executar a suíte em container. Ele é um `@defeito-conhecido`. Depois da primeira execução no CI, a H-15 passou a ser reproduzida pelo **CT-WEB-058** (com volume controlado), e o CT-WEB-051 voltou ao gate: a visão do gate passou a ter **47/47**.
 | Visão do gate (`npm run test:gate`) | 46 | 46 | 0 | ~1,3 min |
 
 Detalhes em [docs/test-execution/web-2026-10-29.md](../../docs/test-execution/web-2026-10-29.md).

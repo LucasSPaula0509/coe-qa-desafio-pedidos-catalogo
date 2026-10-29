@@ -66,7 +66,8 @@ Aplicação: `http://localhost:4200` (SPA Angular servida por nginx, que faz o p
 | ID | Cenário | Entrada / pré-condição | Resultado esperado | Ref. | Técnica | Prio | Nível |
 |---|---|---|---|---|---|---|---|
 | CT-WEB-050 | Pedido recém-criado no topo da lista | Pedido criado via API no setup | Primeira linha: id curto (13 caracteres + "…", id completo no tooltip), nome do cliente, quantidade de itens, subtotal, desconto, total, situação "Criado" e data, coerentes com a API | RN-32, RN-17 | CU | P1 | WEB |
-| CT-WEB-051 | Paginação | ≥ 21 pedidos no ambiente | Controle de paginação visível. A página 2 exibe os pedidos de `GET ?page=1&size=20`, na mesma ordem | RN-32, RN-17, H-15 | CU | P2 | WEB |
+| CT-WEB-051 | Paginação | ≥ 21 pedidos no ambiente | Controle de paginação visível. O controle "próxima" leva à página 2, que exibe os pedidos de `GET ?page=1&size=20`, na mesma ordem (válido em qualquer volume) | RN-32, RN-17 | CU | P2 | WEB |
+| CT-WEB-058 | Paginação com **volume**: todos os links de página ao alcance | ≥ 1.000 pedidos (criados via API, em lotes, se faltarem) | Links da primeira, da segunda e da última página visíveis na tela (rolando se preciso); clicar na página 2 exibe os pedidos de `GET ?page=1&size=20` | RN-32, RN-17, H-15 | VL | P2 | WEB |
 | CT-WEB-052 | Detalhe a partir da lista | Clicar em "Ver" no pedido do setup | Detalhe com o cliente (nome, documento, e-mail), o resumo (id, situação, data, subtotal, desconto, total) e os itens (produto, ID, quantidade, preço unitário, total), iguais ao `GET /orders/{id}` | RN-32, RN-16 | CU | P1 | WEB |
 | CT-WEB-053 | Detalhe de pedido inexistente | Abrir `/orders/<uuid-aleatório>` | Mensagem "Pedido não encontrado." com `requestId` | RN-32, RN-34 | PE | P2 | WEB |
 | CT-WEB-054 | Lista vazia | API interceptada: página vazia | Estado vazio com ação "Novo pedido", que navega para `/orders/new` | RN-32 | PE | P3 | WEB+MOCK |

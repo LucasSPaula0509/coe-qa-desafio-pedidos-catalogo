@@ -33,4 +33,12 @@ export class OrderListPage extends AppShell {
   pagination(): Locator {
     return this.page.getByRole('navigation', { name: this.t('orders.list.pagination') });
   }
+
+  /**
+   * Controle "próxima página". O rótulo acessível vem do ng-bootstrap e não é traduzido pelo SUT
+   * ("Next" em todos os idiomas — observação registrada no relatório de qualidade).
+   */
+  nextPageLink(): Locator {
+    return this.pagination().getByRole('link', { name: 'Next' });
+  }
 }

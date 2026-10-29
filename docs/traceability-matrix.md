@@ -9,9 +9,9 @@
 | Regras funcionais (RN) | 34 |
 | Requisitos não funcionais (NF) | 4 |
 | Questões (Q) / suspeitas (H) | 12 / 18 |
-| Casos de teste | 182 |
+| Casos de teste | 183 |
 | Cobertura de requisitos (RN/NF com ≥ 1 caso) | 38/38 (100%) |
-| Casos automatizados | 166/182 (91%) |
+| Casos automatizados | 167/183 (91%) |
 
 ### Casos por área e prioridade
 
@@ -23,8 +23,8 @@
 | Integração | [integration.md](test-cases/integration.md) | 15 | 7 / 8 / 0 |
 | Performance | [performance.md](test-cases/performance.md) | 8 | 2 / 3 / 3 |
 | Segurança | [security.md](test-cases/security.md) | 16 | 4 / 7 / 5 |
-| Interface web | [web-e2e.md](test-cases/web-e2e.md) | 47 | 14 / 22 / 11 |
-| **Total** | | **182** | **82 / 74 / 26** |
+| Interface web | [web-e2e.md](test-cases/web-e2e.md) | 48 | 14 / 23 / 11 |
+| **Total** | | **183** | **82 / 75 / 26** |
 
 ### Casos por nível de execução
 
@@ -33,7 +33,7 @@
 | API | 85 |
 | API+DB | 16 |
 | API+FI | 10 |
-| WEB | 41 |
+| WEB | 42 |
 | WEB+MOCK | 5 |
 | ESTÁTICO | 1 |
 | SEC | 15 |
@@ -60,7 +60,7 @@
 | RN-14 | Status inicial | [CT-ORD-001](test-cases/api-orders.md), [CT-ORD-015](test-cases/api-orders.md) | 2 / 0 / 0 |
 | RN-15 | Resposta de criação | [CT-TRV-010](test-cases/api-cross-cutting.md), [CT-TRV-011](test-cases/api-cross-cutting.md), [CT-ORD-016](test-cases/api-orders.md), [CT-INT-013](test-cases/integration.md), [CT-INT-014](test-cases/integration.md), [CT-SEC-013](test-cases/security.md) | 2 / 2 / 2 |
 | RN-16 | Detalhe | [CT-ORD-017](test-cases/api-orders.md), [CT-ORD-060](test-cases/api-orders.md), [CT-ORD-061](test-cases/api-orders.md), [CT-INT-010](test-cases/integration.md), [CT-INT-013](test-cases/integration.md), [CT-WEB-052](test-cases/web-e2e.md) | 5 / 1 / 0 |
-| RN-17 | Listagem paginada | [CT-ORD-070](test-cases/api-orders.md), [CT-ORD-071](test-cases/api-orders.md), [CT-ORD-072](test-cases/api-orders.md), [CT-ORD-073](test-cases/api-orders.md), [CT-ORD-074](test-cases/api-orders.md), [CT-ORD-075](test-cases/api-orders.md), [CT-ORD-079](test-cases/api-orders.md), [CT-INT-010](test-cases/integration.md), [CT-INT-013](test-cases/integration.md), [CT-PRF-008](test-cases/performance.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md) | 5 / 6 / 1 |
+| RN-17 | Listagem paginada | [CT-ORD-070](test-cases/api-orders.md), [CT-ORD-071](test-cases/api-orders.md), [CT-ORD-072](test-cases/api-orders.md), [CT-ORD-073](test-cases/api-orders.md), [CT-ORD-074](test-cases/api-orders.md), [CT-ORD-075](test-cases/api-orders.md), [CT-ORD-079](test-cases/api-orders.md), [CT-INT-010](test-cases/integration.md), [CT-INT-013](test-cases/integration.md), [CT-PRF-008](test-cases/performance.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md), [CT-WEB-058](test-cases/web-e2e.md) | 5 / 7 / 1 |
 | RN-18 | Filtro por status | [CT-ORD-076](test-cases/api-orders.md), [CT-ORD-077](test-cases/api-orders.md), [CT-INT-013](test-cases/integration.md) | 3 / 0 / 0 |
 | RN-19 | Consulta individual | [CT-CAT-001](test-cases/api-catalog.md), [CT-CAT-002](test-cases/api-catalog.md), [CT-CAT-003](test-cases/api-catalog.md), [CT-CAT-004](test-cases/api-catalog.md), [CT-CAT-005](test-cases/api-catalog.md), [CT-CAT-006](test-cases/api-catalog.md), [CT-CAT-007](test-cases/api-catalog.md), [CT-CAT-008](test-cases/api-catalog.md), [CT-TRV-011](test-cases/api-cross-cutting.md) | 6 / 1 / 2 |
 | RN-20 | Consulta em lote | [CT-CAT-010](test-cases/api-catalog.md), [CT-CAT-011](test-cases/api-catalog.md), [CT-CAT-012](test-cases/api-catalog.md), [CT-CAT-013](test-cases/api-catalog.md), [CT-CAT-014](test-cases/api-catalog.md), [CT-CAT-015](test-cases/api-catalog.md), [CT-CAT-016](test-cases/api-catalog.md), [CT-CAT-017](test-cases/api-catalog.md), [CT-CAT-018](test-cases/api-catalog.md), [CT-CAT-019](test-cases/api-catalog.md), [CT-CAT-020](test-cases/api-catalog.md), [CT-CAT-022](test-cases/api-catalog.md), [CT-TRV-011](test-cases/api-cross-cutting.md), [CT-INT-012](test-cases/integration.md), [CT-SEC-003](test-cases/security.md), [CT-WEB-026](test-cases/web-e2e.md) | 8 / 6 / 2 |
@@ -75,7 +75,7 @@
 | RN-29 | Painel | [CT-WEB-010](test-cases/web-e2e.md), [CT-WEB-011](test-cases/web-e2e.md), [CT-WEB-012](test-cases/web-e2e.md), [CT-WEB-013](test-cases/web-e2e.md) | 1 / 1 / 2 |
 | RN-30 | Catálogo | [CT-WEB-020](test-cases/web-e2e.md), [CT-WEB-021](test-cases/web-e2e.md), [CT-WEB-022](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-024](test-cases/web-e2e.md), [CT-WEB-025](test-cases/web-e2e.md), [CT-WEB-026](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md) | 3 / 4 / 1 |
 | RN-31 | Novo pedido | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-031](test-cases/web-e2e.md), [CT-WEB-032](test-cases/web-e2e.md), [CT-WEB-033](test-cases/web-e2e.md), [CT-WEB-034](test-cases/web-e2e.md), [CT-WEB-035](test-cases/web-e2e.md), [CT-WEB-036](test-cases/web-e2e.md), [CT-WEB-037](test-cases/web-e2e.md), [CT-WEB-038](test-cases/web-e2e.md), [CT-WEB-039](test-cases/web-e2e.md), [CT-WEB-040](test-cases/web-e2e.md), [CT-WEB-041](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-044](test-cases/web-e2e.md), [CT-WEB-045](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md) | 6 / 10 / 1 |
-| RN-32 | Pedidos | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md), [CT-WEB-052](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-054](test-cases/web-e2e.md), [CT-WEB-055](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md) | 3 / 3 / 2 |
+| RN-32 | Pedidos | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md), [CT-WEB-058](test-cases/web-e2e.md), [CT-WEB-052](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-054](test-cases/web-e2e.md), [CT-WEB-055](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md) | 3 / 4 / 2 |
 | RN-33 | Idiomas | [CT-WEB-001](test-cases/web-e2e.md), [CT-WEB-057](test-cases/web-e2e.md), [CT-WEB-060](test-cases/web-e2e.md), [CT-WEB-061](test-cases/web-e2e.md), [CT-WEB-062](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md), [CT-WEB-064](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 2 / 4 / 2 |
 | RN-34 | Erros na interface | [CT-WEB-057](test-cases/web-e2e.md), [CT-WEB-014](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 0 / 7 / 1 |
 | NF-01 | Desempenho (SLO proposto) | [CT-PRF-001](test-cases/performance.md), [CT-PRF-002](test-cases/performance.md), [CT-PRF-003](test-cases/performance.md), [CT-PRF-006](test-cases/performance.md), [CT-PRF-008](test-cases/performance.md) | 2 / 2 / 1 |
@@ -115,7 +115,7 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | H-12 | Requisições rejeitadas pelo servidor web (Tomcat), antes da aplicação, respondem página HTML sem envelope e… | [CT-CAT-007](test-cases/api-catalog.md) |
 | H-13 | O front-end deixa de alcançar o order-service após um redeploy dele: /api/orders responde 502 (ou é encamin… | [CT-WEB-056](test-cases/web-e2e.md) |
 | H-14 | O diálogo "Descartar pedido?" é exibido vazio (sem título, mensagem e rótulos dos botões) e confirmar não s… | [CT-WEB-044](test-cases/web-e2e.md) |
-| H-15 | A paginação da listagem transborda: com muitas páginas, os primeiros links (e a seta "anterior") ficam fora… | [CT-WEB-051](test-cases/web-e2e.md) |
+| H-15 | A paginação da listagem transborda: com muitas páginas, os primeiros links (e a seta "anterior") ficam fora… | [CT-WEB-058](test-cases/web-e2e.md) |
 | H-16 | No detalhe do pedido, a região rolável da tabela de itens não é acessível por teclado. | [CT-WEB-070](test-cases/web-e2e.md) |
 | H-17 | Em espanhol, valores de 4 dígitos são agrupados (3.500,00 BRL), divergindo da regra do CLDR para es (3500,0… | [CT-WEB-061](test-cases/web-e2e.md) |
 | H-18 | O front-end fica inoperante quando servido por HTTP fora de localhost (ex.: homologação ou intranet): exibe… | [CT-WEB-057](test-cases/web-e2e.md) |
@@ -292,7 +292,8 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | [CT-WEB-044](test-cases/web-e2e.md) | Cancelar com e sem dados | RN-31, H-14 | P3 | WEB | ✅ Automatizado |
 | [CT-WEB-045](test-cases/web-e2e.md) | Duplo clique em "Criar pedido" | RN-31 | P2 | WEB | ✅ Automatizado |
 | [CT-WEB-050](test-cases/web-e2e.md) | Pedido recém-criado no topo da lista | RN-32, RN-17 | P1 | WEB | ✅ Automatizado |
-| [CT-WEB-051](test-cases/web-e2e.md) | Paginação | RN-32, RN-17, H-15 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-051](test-cases/web-e2e.md) | Paginação | RN-32, RN-17 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-058](test-cases/web-e2e.md) | Paginação com volume: todos os links de página ao alcance | RN-32, RN-17, H-15 | P2 | WEB | ✅ Automatizado |
 | [CT-WEB-052](test-cases/web-e2e.md) | Detalhe a partir da lista | RN-32, RN-16 | P1 | WEB | ✅ Automatizado |
 | [CT-WEB-053](test-cases/web-e2e.md) | Detalhe de pedido inexistente | RN-32, RN-34 | P2 | WEB | ✅ Automatizado |
 | [CT-WEB-054](test-cases/web-e2e.md) | Lista vazia | RN-32 | P3 | WEB+MOCK | ✅ Automatizado |
