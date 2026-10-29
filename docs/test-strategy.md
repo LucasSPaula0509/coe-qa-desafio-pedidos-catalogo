@@ -171,7 +171,7 @@ O *override* usa apenas variáveis de ambiente já suportadas pelo SUT (`sut/REA
 
 **Shift-left aplicado:**
 
-- **Revisão da especificação antes de testar:** a análise crítica da base de teste gerou 11 questões e 8 suspeitas antes da primeira linha de automação.
+- **Revisão da especificação antes de testar:** a análise crítica da base de teste gerou 11 questões e 8 suspeitas antes da primeira linha de automação, e o smoke do ambiente revelou a 9ª (H-09).
 - **Contrato verificado em todo PR**, por JSON Schema e *drift* do OpenAPI.
 - **Smoke de performance em todo PR**, para pegar regressões cedo, sem esperar a fase de performance.
 - **Rastreabilidade verificada por script** (`node scripts/traceability.mjs --check`), o que impede caso sem requisito ou requisito sem caso.

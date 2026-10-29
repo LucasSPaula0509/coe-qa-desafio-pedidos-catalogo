@@ -30,6 +30,7 @@ Resultado da **análise crítica da base de teste** (etapa 2 do SDD). As questõ
 | H-06 | O lote do catálogo **aceita IDs duplicados** (deduplicação silenciosa). | `GetProductPricesUseCase.java:27` aplica `distinct()` sem rejeitar. | `400 VALIDATION_ERROR` (Q-04). | CT-CAT-018 | S4 |
 | H-07 | `X-Request-Id` enviado pelo cliente é aceito **sem limite de tamanho nem validação de formato** e é ecoado na resposta e nos logs. | `RequestIdFilter.java:31-36` aceita qualquer valor não vazio. | Valor abusivo rejeitado ou substituído. Logs íntegros (NF-03). | CT-SEC-009 | S4 (segurança, baixo) |
 | H-08 | O front-end (nginx) **não envia cabeçalhos de segurança** (CSP, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`). | `nginx.conf.template` só define `Cache-Control` (linhas 39 e 43). | Cabeçalhos de segurança presentes (NF-03). | CT-SEC-008 | S3 (segurança) |
+| H-09 | Campos nulos são **omitidos** das respostas em vez de devolvidos como `null`: `currentPrice` sem preço vigente e `validTo` em janela sem fim. | `api.md` documenta `"validTo": null` e diz que "`currentPrice` é `null` quando não há janela vigente". Os dois serviços configuram `spring.jackson.default-property-inclusion: non_null` (`application.yml`). **Observado** no smoke de 2026-10-29: `GET /products/PROD-005` retornou o corpo sem a chave `currentPrice`. | Campos presentes com valor `null`, conforme o contrato documentado (RN-19, RN-20). | CT-CAT-001, CT-CAT-004, CT-CAT-005, CT-CAT-008 | S3 (contrato) |
 
 ## Riscos observados que não são defeitos
 

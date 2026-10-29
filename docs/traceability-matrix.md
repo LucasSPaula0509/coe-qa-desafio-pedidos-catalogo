@@ -8,7 +8,7 @@
 |---|---|
 | Regras funcionais (RN) | 34 |
 | Requisitos não funcionais (NF) | 4 |
-| Questões (Q) / suspeitas (H) | 11 / 8 |
+| Questões (Q) / suspeitas (H) | 11 / 9 |
 | Casos de teste | 179 |
 | Cobertura de requisitos (RN/NF com ≥ 1 caso) | 38/38 (100%) |
 | Casos automatizados | 0/179 (0%) |
@@ -108,19 +108,20 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | H-06 | O lote do catálogo aceita IDs duplicados (deduplicação silenciosa). | [CT-CAT-018](test-cases/api-catalog.md) |
 | H-07 | X-Request-Id enviado pelo cliente é aceito sem limite de tamanho nem validação de formato e é ecoado na res… | [CT-SEC-009](test-cases/security.md) |
 | H-08 | O front-end (nginx) não envia cabeçalhos de segurança (CSP, X-Frame-Options, X-Content-Type-Options, Referr… | [CT-SEC-008](test-cases/security.md) |
+| H-09 | Campos nulos são omitidos das respostas em vez de devolvidos como null: currentPrice sem preço vigente e va… | [CT-CAT-001](test-cases/api-catalog.md), [CT-CAT-004](test-cases/api-catalog.md), [CT-CAT-005](test-cases/api-catalog.md), [CT-CAT-008](test-cases/api-catalog.md) |
 
 ## Casos → requisitos e automação
 
 | Caso | Cenário | Requisitos | Prio | Nível | Automação |
 |---|---|---|---|---|---|
-| [CT-CAT-001](test-cases/api-catalog.md) | Produto ativo com preço vigente | RN-19, RN-22, H-05 | P1 | API | ⏳ Planejado |
+| [CT-CAT-001](test-cases/api-catalog.md) | Produto ativo com preço vigente | RN-19, RN-22, H-05, H-09 | P1 | API | ⏳ Planejado |
 | [CT-CAT-002](test-cases/api-catalog.md) | Produto com histórico de preços | RN-08, RN-19 | P1 | API | ⏳ Planejado |
 | [CT-CAT-003](test-cases/api-catalog.md) | Produto inativo continua consultável | RN-19, RN-22 | P2 | API | ⏳ Planejado |
-| [CT-CAT-004](test-cases/api-catalog.md) | Preço apenas futuro | RN-08, RN-19 | P1 | API | ⏳ Planejado |
-| [CT-CAT-005](test-cases/api-catalog.md) | Preço expirado | RN-08, RN-19 | P1 | API | ⏳ Planejado |
+| [CT-CAT-004](test-cases/api-catalog.md) | Preço apenas futuro | RN-08, RN-19, H-09 | P1 | API | ⏳ Planejado |
+| [CT-CAT-005](test-cases/api-catalog.md) | Preço expirado | RN-08, RN-19, H-09 | P1 | API | ⏳ Planejado |
 | [CT-CAT-006](test-cases/api-catalog.md) | Produto inexistente | RN-19, RN-23 | P1 | API | ⏳ Planejado |
 | [CT-CAT-007](test-cases/api-catalog.md) | Identificadores incomuns | RN-19, RN-25 | P3 | API | ⏳ Planejado |
-| [CT-CAT-008](test-cases/api-catalog.md) | Contrato da consulta individual | RN-19 | P1 | API | ⏳ Planejado |
+| [CT-CAT-008](test-cases/api-catalog.md) | Contrato da consulta individual | RN-19, H-09 | P1 | API | ⏳ Planejado |
 | [CT-CAT-010](test-cases/api-catalog.md) | Lote de produtos válidos | RN-20 | P1 | API | ⏳ Planejado |
 | [CT-CAT-011](test-cases/api-catalog.md) | Lote com todos os cenários da massa + inexistente | RN-20, RN-08, RN-22 | P1 | API | ⏳ Planejado |
 | [CT-CAT-012](test-cases/api-catalog.md) | Lote só com inexistentes | RN-20 | P2 | API | ⏳ Planejado |

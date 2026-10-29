@@ -105,7 +105,7 @@ Sequência por fase. Cada fase termina com PR revisado para `develop` e só come
 |---|---|---|
 | 0. Estrutura | Repositório, GitFlow, integridade do SUT, ADRs de stack | ✅ PR `feature/estrutura-repositorio` |
 | 1. Estratégia e planejamento | Especificação SDD, estratégia, plano, casos, matriz | ✅ PR `feature/parte-1-estrategia-planejamento` |
-| 2. API | Projeto Maven, cliente/builders, schemas, CT-ORD/CAT/TRV/INT (incluindo injeção de falhas) | Casos P1/P2 automatizados; H-01..H-07 confirmadas ou descartadas |
+| 2. API | Projeto Maven, cliente/builders, schemas, CT-ORD/CAT/TRV/INT (incluindo injeção de falhas) | Casos P1/P2 automatizados; H-01..H-07 e H-09 confirmadas ou descartadas |
 | 3. Web | Projeto Playwright, helper de i18n, Page Objects, CT-WEB | Casos P1/P2 automatizados, sem instabilidade em 5 execuções seguidas |
 | 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | Esteira verde ou vermelha **só** por defeito conhecido; deploy condicionado |
 | 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | Critérios de saída (§5) avaliados e documentados |
@@ -126,7 +126,7 @@ Papéis do cenário de referência (equipe de QA sênior + pleno, em parceria co
 
 | ID | Risco | Probab. | Impacto | Mitigação | Contingência |
 |---|---|---|---|---|---|
-| RP-01 | **Docker indisponível na estação local** (verificado na preparação: não instalado) | Alta | Alto | Instalar o Docker Desktop antes da Fase 2; CI como ambiente de referência desde o primeiro PR | Executar as suítes só no CI e depurar pelos artefatos (logs, traces) |
+| RP-01 | **Docker indisponível na estação local** (verificado na preparação: não instalado). **Mitigado em 2026-10-29:** Docker Desktop 4.97 + WSL2 instalados; SUT sobe e passa nos critérios de entrada | Baixa | Alto | Instalar o Docker Desktop antes da Fase 2; CI como ambiente de referência desde o primeiro PR | Executar as suítes só no CI e depurar pelos artefatos (logs, traces) |
 | RP-02 | Ausência de SLA documentado | Certa | Médio | SLOs propostos (NF-01) e explicitados como premissa | Reportar a performance como linha de base comparativa, sem aprovação ou reprovação absoluta |
 | RP-03 | Runner de CI compartilhado gera variação de latência | Alta | Médio | Thresholds de smoke conservadores; carga nominal na `develop` com histórico | Repetir a execução para confirmar antes de atribuir regressão |
 | RP-04 | Testes que mutam estado global interferem entre si | Média | Alto | Classes serializadas, *teardown* com verificação, ambiente limpo por execução no CI | `docker compose down -v` e nova execução isolada |

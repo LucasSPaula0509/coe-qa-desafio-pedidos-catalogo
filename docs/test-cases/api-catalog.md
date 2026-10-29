@@ -8,14 +8,14 @@ O oráculo de preço vigente é a massa inicial avaliada no instante da execuç�
 
 | ID | Cenário | Entrada / pré-condição | Resultado esperado | Ref. | Técnica | Prio | Nível |
 |---|---|---|---|---|---|---|---|
-| CT-CAT-001 | Produto ativo com preço vigente | `PROD-001` | `200`; `id` PROD-001; `name` "Notebook Dell Inspiron 15"; `status` `ATIVO`; `currentPrice` = {`value` 3500.00, `currency` BRL, `validFrom` 2025-01-01T00:00:00Z, `validTo` null}. A divergência com o exemplo da documentação (`validFrom` 2026, descrição) é registrada | RN-19, RN-22, H-05 | PE | P1 | API |
+| CT-CAT-001 | Produto ativo com preço vigente | `PROD-001` | `200`; `id` PROD-001; `name` "Notebook Dell Inspiron 15"; `status` `ATIVO`; `currentPrice` = {`value` 3500.00, `currency` BRL, `validFrom` 2025-01-01T00:00:00Z, `validTo` **presente com valor** `null`}. A divergência com o exemplo da documentação (`validFrom` 2026, descrição) é registrada | RN-19, RN-22, H-05, H-09 | PE | P1 | API |
 | CT-CAT-002 | Produto com histórico de preços | `PROD-003` | `currentPrice.value` 649.90; `validFrom` 2025-06-01T00:00:00Z; `validTo` null (a janela de 700.00 já expirou) | RN-08, RN-19 | PE | P1 | API |
 | CT-CAT-003 | Produto inativo continua consultável | `PROD-004` | `200`; `status` `INATIVO`; `currentPrice.value` 1200.00 | RN-19, RN-22 | PE | P2 | API |
-| CT-CAT-004 | Preço apenas futuro | `PROD-005` | `200`; `currentPrice` `null` | RN-08, RN-19 | PE | P1 | API |
-| CT-CAT-005 | Preço expirado | `PROD-006` | `200`; `currentPrice` `null` | RN-08, RN-19 | PE | P1 | API |
+| CT-CAT-004 | Preço apenas futuro | `PROD-005` | `200`; chave `currentPrice` **presente com valor** `null` (ausência da chave diverge do contrato) | RN-08, RN-19, H-09 | PE | P1 | API |
+| CT-CAT-005 | Preço expirado | `PROD-006` | `200`; chave `currentPrice` **presente com valor** `null` | RN-08, RN-19, H-09 | PE | P1 | API |
 | CT-CAT-006 | Produto inexistente | `PROD-999` | `404 PRODUCT_NOT_FOUND` com envelope e `X-Request-Id` | RN-19, RN-23 | PE | P1 | API |
 | CT-CAT-007 | Identificadores incomuns | `PROD%20001`, `%2E%2E%2F`, `prod-001`, ID com 1.000 caracteres | `404 PRODUCT_NOT_FOUND` (ou `400`) com envelope. Nunca `500` nem conteúdo de outro recurso | RN-19, RN-25 | SE | P3 | API |
-| CT-CAT-008 | Contrato da consulta individual | `PROD-001` e `PROD-005` | Corpo valida o JSON Schema de produto (campos obrigatórios, tipos, `currentPrice` nulo ou objeto, datas ISO-8601); `Content-Type` `application/json` | RN-19 | CO | P1 | API |
+| CT-CAT-008 | Contrato da consulta individual | `PROD-001` e `PROD-005` | Corpo valida o JSON Schema de produto (campos obrigatórios, tipos, `currentPrice` e `validTo` **obrigatórios**, nulos ou preenchidos, datas ISO-8601); `Content-Type` `application/json` | RN-19, H-09 | CO | P1 | API |
 
 ## B. Consulta em lote (`POST /products/prices`)
 
