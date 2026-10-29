@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Consulta de preços em lote (RN-20, sut/docs/api.md)",
+  "type": "object",
+  "required": ["prices", "notFound"],
+  "properties": {
+    "prices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["productId", "name", "status", "currentPrice"],
+        "properties": {
+          "productId": {"type": "string"},
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["ATIVO", "INATIVO"]},
+          "currentPrice": {"oneOf": [{"type": "null"}, {"$ref": "price.json#"}]}
+        }
+      }
+    },
+    "notFound": {"type": "array", "items": {"type": "string"}}
+  }
+}

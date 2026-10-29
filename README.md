@@ -9,8 +9,8 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | Parte | Entregável | Status |
 |---|---|---|
 | Estrutura | Repositório, GitFlow, integridade do SUT, ADRs de stack | ✅ Concluída |
-| 1 | Estratégia, plano, especificação (SDD), 179 casos de teste, rastreabilidade gerada e validada por script | ✅ Concluída |
-| 2 | Automação de API (Java + RestAssured) | ⏳ Planejada |
+| 1 | Estratégia, plano, especificação (SDD), casos de teste, rastreabilidade gerada e validada por script | ✅ Concluída |
+| 2 | Automação de API (Java + RestAssured): 111 casos, injeção de falhas, 9 defeitos confirmados | ✅ Concluída |
 | 3 | Automação de front-end (Playwright) | ⏳ Planejada |
 | 4 | Performance (k6) e quality gates no CI/CD | ⏳ Planejada |
 | 5 | Relatório de execução, Issues de defeito, resumo de qualidade | ⏳ Planejada |
@@ -22,7 +22,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 sut/                     Sistema sob teste — NÃO ALTERAR (ver ADR-QA-001)
   docs/                  Base de teste oficial (requisitos, contratos, dados, ADRs do SUT)
 sut.sha256               Manifesto de integridade do SUT (219 arquivos)
-scripts/                 verify-sut-integrity.sh, traceability.mjs
+scripts/                 verify-sut-integrity.sh, traceability.mjs, summarize-junit.mjs
 specs/                   Especificação SDD: regras testáveis (RN), questões e suspeitas (Q/H)
 docs/
   test-strategy.md       Estratégia de testes
@@ -30,8 +30,11 @@ docs/
   test-cases/            Casos de teste por área (CT-*)
   traceability-matrix.md Matriz RN ↔ CT ↔ automação
   adr/                   Decisões do projeto de qualidade (ADR-QA-*)
+  test-execution/        Registros de execução por suíte
   ai-usage.md            Uso de IA: ferramenta, prompts, decisões e validações
-tests/                   Suítes automatizadas (a partir da Parte 2)
+tests/
+  api/                   Suíte de API (Java 17, JUnit 5, RestAssured) — ver tests/api/README.md
+  infra/                 Override do Compose com o proxy de injeção de falhas
 .github/                 Templates de PR e de Issue de defeito (workflows na Parte 4)
 ```
 
@@ -56,12 +59,13 @@ bash scripts/verify-sut-integrity.sh
 
 ### 2. Subir o sistema sob teste
 
-Conforme as instruções do próprio SUT ([sut/README.md](sut/README.md)):
+Conforme as instruções do próprio SUT ([sut/README.md](sut/README.md)), com o *override* de teste que insere o proxy de injeção de falhas entre os serviços (só variável de ambiente, ver [ADR-QA-006](docs/adr/ADR-QA-006-injecao-de-falhas-e-dados.md)):
 
 ```bash
-cd sut
-docker compose up --build -d
+docker compose -f sut/docker-compose.yml -f tests/infra/docker-compose.qa.yml up --build -d
 ```
+
+Sem o *override* (`cd sut && docker compose up --build -d`), o sistema roda exatamente como entregue. Nesse modo, os casos com a tag `fault` não se aplicam.
 
 | Componente | URL |
 |---|---|
@@ -69,7 +73,9 @@ docker compose up --build -d
 | order-service | http://localhost:8080/api/v1/orders · Swagger: http://localhost:8080/swagger-ui.html |
 | catalog-service | http://localhost:8081/api/v1/products · Swagger: http://localhost:8081/swagger-ui.html |
 
-Para voltar ao estado inicial (massa de dados original), use `docker compose down -v`.
+| Proxy de falhas (admin) | http://localhost:8089/__admin |
+
+Para voltar ao estado inicial (massa de dados original), use `docker compose -f sut/docker-compose.yml -f tests/infra/docker-compose.qa.yml down -v`.
 
 ### 3. Validar a rastreabilidade
 
@@ -80,7 +86,16 @@ node scripts/traceability.mjs           # regenera docs/traceability-matrix.md a
 
 ### 4. Executar as suítes
 
-Instruções adicionadas a cada parte entregue (Partes 2 a 4).
+**API** (detalhes, tags e variáveis em [tests/api/README.md](tests/api/README.md)):
+
+```bash
+cd tests/api
+mvn test                                      # completa: 190 execuções; defeitos conhecidos falham de propósito
+mvn test -DexcludedGroups=defeito-conhecido   # visão do gate: 100% deve passar
+node ../../scripts/summarize-junit.mjs target/surefire-reports --failures
+```
+
+Web e performance: instruções adicionadas nas Partes 3 e 4.
 
 ## Documentação
 
@@ -89,10 +104,11 @@ Instruções adicionadas a cada parte entregue (Partes 2 a 4).
 | [Especificação (SDD)](specs/README.md) | Processo SDD, [regras testáveis](specs/business-rules.md) (34 RN + 4 NF) e [questões e suspeitas de defeito](specs/open-questions.md) |
 | [Estratégia de testes](docs/test-strategy.md) | Resumo executivo, riscos, pirâmide, técnicas, dados, ambientes, quality gates, defeitos e métricas |
 | [Plano de testes](docs/test-plan.md) | Escopo, critérios de entrada e saída, suspensão, cronograma, papéis, riscos do projeto |
-| [Casos de teste](docs/test-cases/README.md) | 179 casos por área, com técnica, prioridade e nível de execução |
+| [Casos de teste](docs/test-cases/README.md) | 180 casos por área, com técnica, prioridade e nível de execução |
 | [Matriz de rastreabilidade](docs/traceability-matrix.md) | Requisitos ↔ casos ↔ automação (gerada por `scripts/traceability.mjs`) |
+| [Execução da suíte de API](docs/test-execution/api-2026-10-29.md) | Resultado, estabilidade (3 execuções idênticas) e defeitos confirmados |
 | [Uso de IA](docs/ai-usage.md) | Ferramenta, motivo, prompts, decisões e validações por etapa |
-| [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance) e SDD |
+| [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance), SDD, injeção de falhas e dados |
 | [Guia de contribuição](CONTRIBUTING.md) | GitFlow, commits, PRs e registro de defeitos |
 
 ## Uso de IA
