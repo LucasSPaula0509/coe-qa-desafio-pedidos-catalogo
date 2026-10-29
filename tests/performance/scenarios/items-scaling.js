@@ -4,11 +4,13 @@
 
 import { sleep } from 'k6';
 import { createOrder } from '../lib/operations.js';
+import { SUMMARY_TREND_STATS } from '../lib/config.js';
 import { p95, summaryHandler } from '../lib/summary.js';
 
 const duration = __ENV.DURATION || '3m';
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: {
     one_item: { executor: 'constant-vus', vus: 5, duration, exec: 'oneItem' },
     three_items: { executor: 'constant-vus', vus: 5, duration, exec: 'threeItems' },

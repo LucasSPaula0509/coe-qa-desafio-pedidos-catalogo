@@ -3,7 +3,7 @@
 // Recuperação: no último minuto (cenário "recovery"), p95 de cada operação de volta ao NF-01.
 
 import { mixedIteration, servicesHealthy } from '../lib/operations.js';
-import { sloThresholds } from '../lib/config.js';
+import { sloThresholds, SUMMARY_TREND_STATS } from '../lib/config.js';
 import { summaryHandler } from '../lib/summary.js';
 
 const recoveryThresholds = {};
@@ -14,6 +14,7 @@ for (const [metric, rules] of Object.entries(sloThresholds())) {
 }
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: {
     spike: {
       executor: 'ramping-vus',

@@ -3,6 +3,7 @@
 // confirmar que os serviços seguem saudáveis ao final (teardown).
 
 import { mixedIteration, servicesHealthy } from '../lib/operations.js';
+import { SUMMARY_TREND_STATS } from '../lib/config.js';
 import { summaryHandler } from '../lib/summary.js';
 
 const maxVus = Number(__ENV.MAX_VUS || 300);
@@ -14,6 +15,7 @@ for (let vus = 30; vus <= maxVus; vus += 30) {
 stages.push({ duration: '1m', target: 0 });
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: { stress: { executor: 'ramping-vus', startVUs: 0, stages } },
   // Limites de 2× o SLO: mostram onde a degradação começa (o resultado é informativo).
   thresholds: {

@@ -7,6 +7,9 @@ export const ORDER_URL = __ENV.ORDER_URL || 'http://order-service:8080';
 export const CATALOG_URL = __ENV.CATALOG_URL || 'http://catalog-service:8081';
 export const PROXY_ADMIN_URL = __ENV.PROXY_ADMIN_URL || 'http://catalog-proxy:8080';
 
+/** Estatísticas exibidas no resumo (o padrão do k6 omite o p99, que faz parte do SLO). */
+export const SUMMARY_TREND_STATS = ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'];
+
 /**
  * SLOs propostos (NF-01, docs/test-strategy.md §7) — premissa a homologar (Q-06).
  * Chave = tag "name" das requisições.
