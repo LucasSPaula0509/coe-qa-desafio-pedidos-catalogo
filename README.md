@@ -11,7 +11,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | Estrutura | Repositório, GitFlow, integridade do SUT, ADRs de stack | ✅ Concluída |
 | 1 | Estratégia, plano, especificação (SDD), casos de teste, rastreabilidade gerada e validada por script | ✅ Concluída |
 | 2 | Automação de API (Java + RestAssured): 111 casos, injeção de falhas, 9 defeitos confirmados | ✅ Concluída |
-| 3 | Automação de front-end (Playwright): 47 casos, pt-BR/en/es, acessibilidade, 6 defeitos confirmados | ✅ Concluída |
+| 3 | Automação de front-end (Playwright): 48 casos, pt-BR/en/es, acessibilidade, 6 defeitos confirmados | ✅ Concluída |
 | 4 | Performance (k6, 8 cenários) e esteira GitHub Actions com quality gates G0–G7 | ✅ Concluída |
 | 5 | Relatório de execução, Issues de defeito, resumo de qualidade | ⏳ Planejada |
 | Diferenciais | IA aplicada, segurança, governança, dimensionamento | ⏳ Em andamento (log de IA ativo) |
