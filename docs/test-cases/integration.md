@@ -1,0 +1,24 @@
+# Casos de Teste — Integração Pedidos ↔ Catálogo
+
+Verifica a colaboração **real** entre `order-service` e `catalog-service`. Os testes de integração do próprio SUT (`OrderApiIT`) usam um catálogo simulado (MockWebServer). Aqui os dois serviços rodam de verdade, e a falha é injetada só quando o cenário exige.
+
+**Injeção de falhas (nível API+FI):** o ambiente de teste usa um *override* do Docker Compose que aponta `CATALOG_BASE_URL` do `order-service` para um proxy (WireMock em modo proxy diante do catálogo real). O proxy permite contar chamadas, inspecionar headers, injetar latência e erros. É **apenas configuração por variável de ambiente**, já suportada pelo SUT (`sut/README.md`), sem alteração de código. Indisponibilidade total é simulada parando o container do catálogo. Cada caso restaura o estado no teardown.
+
+**Mudanças de dados no catálogo (nível API+DB):** feitas diretamente no MongoDB, porque não há endpoint de escrita (RN-21). São sempre revertidas no teardown, e essas classes executam em série.
+
+| ID | Cenário | Entrada / pré-condição | Resultado esperado | Ref. | Técnica | Prio | Nível |
+|---|---|---|---|---|---|---|---|
+| CT-INT-001 | Pedido usa nome e preço **vigentes** do catálogo | Para PROD-001, 002 e 003: consultar `GET /products/{id}` e criar pedido com os 3 | `productName` e `unitPrice` de cada item iguais a `name` e `currentPrice.value` do catálogo | RN-05, RN-08, RN-11 | CU | P1 | API |
+| CT-INT-002 | **Snapshot**: mudança de preço e nome no catálogo não altera pedidos existentes | Criar pedido com PROD-002. No MongoDB, alterar o nome e encerrar a janela vigente, criando uma nova janela (599.90) a partir de agora | O pedido antigo mantém "Mouse Logitech MX Master 3S" / 499.90 (`GET` detalhe e listagem). Um **novo** pedido usa o nome novo e 599.90. Estado do produto restaurado no teardown | RN-11, RN-08 | CU | P1 | API+DB |
+| CT-INT-003 | Produto **inativado** no catálogo passa a ser recusado sem afetar pedidos antigos | Criar pedido com PROD-002. No MongoDB, `status` → `INATIVO` | Novo pedido com PROD-002 → `422 PRODUCT_INACTIVE`. O pedido antigo permanece inalterado. Estado restaurado | RN-07, RN-11 | TD | P2 | API+DB |
+| CT-INT-004 | **Uma única** chamada em lote por pedido (anti-N+1) | Proxy com contador zerado. Pedido com PROD-001, 002 e 003 | Exatamente 1 requisição `POST /api/v1/products/prices` no proxy, com os 3 IDs no corpo; nenhuma chamada `GET /products/{id}` | RN-09 | CO | P2 | API+FI |
+| CT-INT-005 | Propagação do `X-Request-Id` até o catálogo | `POST /orders` com `X-Request-Id: it-<runId>` | A requisição recebida pelo proxy carrega `X-Request-Id: it-<runId>`. A resposta do pedido ecoa o mesmo valor | RN-09, RN-24 | CO | P2 | API+FI |
+| CT-INT-006 | Catálogo **indisponível** | Container `catalog-service` parado | `POST /orders` → `503 CATALOG_UNAVAILABLE` com envelope; nenhum pedido persistido. Após religar o catálogo, nova criação → `201` (recuperação sem reiniciar o `order-service`) | RN-10, RN-07 | PE | P1 | API+FI |
+| CT-INT-007 | Catálogo **lento** além do limite | Proxy com atraso fixo de 5 s (> leitura de 3 s) | `504 CATALOG_TIMEOUT` com envelope; nenhum pedido persistido. O tempo total de resposta é **medido e registrado** (esperado ≈ 6 s pelas 2 tentativas, risco observado em `specs/open-questions.md`) | RN-10 | VL | P1 | API+FI |
+| CT-INT-008 | Catálogo lento **dentro** do limite | Proxy com atraso fixo de 2 s (< 3 s) | `201` normal | RN-10 | VL | P2 | API+FI |
+| CT-INT-009 | Catálogo responde **erro 5xx** | Proxy devolve `500` para `/products/prices` | `503 CATALOG_UNAVAILABLE` com envelope; nenhum pedido persistido | RN-10 | PE | P2 | API+FI |
+| CT-INT-010 | Catálogo fora **não afeta leitura** de pedidos | Pedido criado no setup; depois, catálogo parado | `GET /orders/{id}` e `GET /orders` → `200` com os dados do snapshot | RN-11, RN-16, RN-17 | CU | P2 | API+FI |
+| CT-INT-011 | Validações de entrada **não dependem** do catálogo | Catálogo parado. Payloads: produto repetido, quantidade 0, e-mail inválido | `400 VALIDATION_ERROR` para cada um (não `503`): a validação precede a integração | RN-04, RN-03, RN-01 | TD | P2 | API+FI |
+| CT-INT-012 | Pedido com **51 produtos distintos** (acima do limite do lote do catálogo) | PROD-001..003 + 48 IDs inexistentes | `422 PRODUCT_NOT_FOUND` com os 48 IDs. **Nunca `503`** (entrada válida pelo contrato do pedido) | RN-02, RN-20, RN-25, Q-07, H-01 | VL | P1 | API |
+| CT-INT-013 | Jornada de API ponta a ponta | Criar pedido → detalhar → listar (página 0) → filtrar por `CRIADO` | O pedido criado aparece no topo da listagem e no filtro, com valores idênticos em todos os endpoints | RN-15, RN-16, RN-17, RN-18 | CU | P1 | API |
+| CT-INT-014 | Criação **concorrente** | 20 `POST /orders` simultâneos (PROD-001 × 1, clientes distintos) | Todos `201`; 20 `id` distintos; todos recuperáveis via `GET`; valores corretos em todos | RN-12, RN-13, RN-15 | CA | P2 | API |
