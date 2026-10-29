@@ -16,6 +16,7 @@ Aplicação: `http://localhost:4200` (SPA Angular servida por nginx, que faz o p
 | CT-WEB-001 | Idioma padrão na primeira visita | `localStorage` vazio; abrir `/` | Textos em pt-BR (menu: "Dashboard", "Pedidos", "Catálogo"); seletor indica "Português". A nomenclatura "Dashboard" × "Painel" (PDF) é registrada | RN-33, RN-28, Q-11 | PE | P1 | WEB |
 | CT-WEB-002 | Navegação pelo menu lateral | Clicar em Dashboard, Pedidos e Catálogo | URLs `/`, `/orders` e `/catalog`; título da página correspondente; item do menu ativo destacado | RN-28 | CU | P2 | WEB |
 | CT-WEB-003 | Rota inexistente | Abrir `/rota-inexistente` | Redireciona para `/404` com a página "não encontrada" | RN-28 | SE | P3 | WEB |
+| CT-WEB-057 | Aplicação operante quando acessada por **nome de host via HTTP** (fora de `localhost`) | Navegador com `--host-resolver-rules` mapeando `qa-pedidos.test` para o front-end; pré-condição verificada: `isSecureContext = false` | Painel com textos traduzidos (título "Dashboard") e menu de navegação | RN-28, RN-33, RN-34, H-18 | SE | P2 | WEB |
 
 ## B. Painel (Dashboard)
 

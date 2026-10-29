@@ -11,8 +11,8 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | Estrutura | Repositório, GitFlow, integridade do SUT, ADRs de stack | ✅ Concluída |
 | 1 | Estratégia, plano, especificação (SDD), casos de teste, rastreabilidade gerada e validada por script | ✅ Concluída |
 | 2 | Automação de API (Java + RestAssured): 111 casos, injeção de falhas, 9 defeitos confirmados | ✅ Concluída |
-| 3 | Automação de front-end (Playwright): 46 casos, pt-BR/en/es, acessibilidade, 5 defeitos confirmados | ✅ Concluída |
-| 4 | Performance (k6) e quality gates no CI/CD | ⏳ Planejada |
+| 3 | Automação de front-end (Playwright): 47 casos, pt-BR/en/es, acessibilidade, 6 defeitos confirmados | ✅ Concluída |
+| 4 | Performance (k6, 8 cenários) e esteira GitHub Actions com quality gates G0–G7 | ✅ Concluída |
 | 5 | Relatório de execução, Issues de defeito, resumo de qualidade | ⏳ Planejada |
 | Diferenciais | IA aplicada, segurança, governança, dimensionamento | ⏳ Em andamento (log de IA ativo) |
 
@@ -22,7 +22,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 sut/                     Sistema sob teste — NÃO ALTERAR (ver ADR-QA-001)
   docs/                  Base de teste oficial (requisitos, contratos, dados, ADRs do SUT)
 sut.sha256               Manifesto de integridade do SUT (219 arquivos)
-scripts/                 verify-sut-integrity.sh, traceability.mjs, summarize-junit.mjs
+scripts/                 verify-sut-integrity.sh, traceability.mjs, summarize-junit.mjs, wait-for-sut.sh
 specs/                   Especificação SDD: regras testáveis (RN), questões e suspeitas (Q/H)
 docs/
   test-strategy.md       Estratégia de testes
@@ -35,8 +35,9 @@ docs/
 tests/
   api/                   Suíte de API (Java 17, JUnit 5, RestAssured) — ver tests/api/README.md
   web/                   Suíte E2E (Playwright + TypeScript, axe-core) — ver tests/web/README.md
+  performance/           Cenários k6 (smoke, carga, estresse, pico, resistência...) — ver tests/performance/README.md
   infra/                 Override do Compose com o proxy de injeção de falhas
-.github/                 Templates de PR e de Issue de defeito (workflows na Parte 4)
+.github/                 Esteira de quality gates (workflows/quality-gates.yml) e templates de PR e de defeito
 ```
 
 ## Pré-requisitos
@@ -106,7 +107,26 @@ npm run test:gate        # visão do gate: 100% deve passar
 npm run report           # relatório HTML com trace, screenshot e vídeo das falhas
 ```
 
-Performance: instruções adicionadas na Parte 4.
+**Performance** (detalhes em [tests/performance/README.md](tests/performance/README.md)):
+
+```bash
+bash scripts/wait-for-sut.sh                 # prontidão e aquecimento do ambiente
+bash tests/performance/run.sh smoke          # gate de PR; saída ≠ 0 = threshold violado
+bash tests/performance/run.sh load           # carga nominal (gate na develop/main)
+```
+
+### 5. Esteira de CI/CD (quality gates)
+
+[`.github/workflows/quality-gates.yml`](.github/workflows/quality-gates.yml) roda em todo PR, em push para `develop`/`main` e sob demanda ([ADR-QA-007](docs/adr/ADR-QA-007-esteira-quality-gates.md)):
+
+| Gate | Verificação |
+|---|---|
+| G0 | Integridade do SUT |
+| G1 | Rastreabilidade + qualidade do código de teste (Spotless, tsc, ESLint, Prettier) |
+| G2 | Ambiente do zero, saudável e aquecido (em cada job de suíte) |
+| G3 / G4 | API e web sem defeitos conhecidos (bloqueantes); defeitos conhecidos em passo não bloqueante, no resumo |
+| G5 | k6: smoke em todo PR; carga nominal na `develop`/`main` |
+| G7 | Deploy (simulado) só com G0–G5 aprovados e **sem defeito S1/S2 aberto** sem o label `excecao-aprovada` |
 
 ## Documentação
 
@@ -119,8 +139,9 @@ Performance: instruções adicionadas na Parte 4.
 | [Matriz de rastreabilidade](docs/traceability-matrix.md) | Requisitos ↔ casos ↔ automação (gerada por `scripts/traceability.mjs`) |
 | [Execução da suíte de API](docs/test-execution/api-2026-10-29.md) | Resultado, estabilidade (3 execuções idênticas) e defeitos confirmados |
 | [Execução da suíte web](docs/test-execution/web-2026-10-29.md) | Resultado, estabilidade, prova de oráculo e defeitos da interface |
+| [Execução de performance](docs/test-execution/performance-2026-10-29.md) | Smoke aprovado e validação dos 8 cenários k6 |
 | [Uso de IA](docs/ai-usage.md) | Ferramenta, motivo, prompts, decisões e validações por etapa |
-| [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance), SDD, injeção de falhas e dados |
+| [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance), SDD, injeção de falhas e dados, esteira de quality gates |
 | [Guia de contribuição](CONTRIBUTING.md) | GitFlow, commits, PRs e registro de defeitos |
 
 ## Uso de IA

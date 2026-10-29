@@ -1,0 +1,245 @@
+# Esteira de qualidade — quality gates obrigatórios antes de qualquer deploy
+# (docs/test-strategy.md §12; ADR-QA-007).
+#
+#   G0 integridade do SUT          → G1 qualidade do código de teste + rastreabilidade
+#   G2 ambiente saudável (em cada job de suíte: compose do zero + prontidão + aquecimento)
+#   G3 API + integração            G4 web E2E (Chromium, imagem oficial do Playwright)
+#   G5 performance (smoke em todo PR; carga nominal na develop/main)
+#   G6 segurança                   → adicionado com a suíte de segurança (Parte diferenciais)
+#   G7 decisão de deploy: depende de todos os gates e bloqueia com defeito S1/S2 aberto
+#
+# Política de defeitos conhecidos (estratégia §12): os testes marcados como defeito-conhecido
+# rodam em passo próprio, não bloqueante, e aparecem no resumo; o bloqueio por esses defeitos é
+# feito no G7, pela severidade das Issues — nenhum teste é desativado para "deixar verde".
+
+name: Quality Gates
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      performance_profile:
+        description: Cenário k6 a executar no G5
+        type: choice
+        default: smoke
+        options: [smoke, load, stress, spike, soak, items-scaling, dependency-degradation, volume]
+
+concurrency:
+  group: quality-gates-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  COMPOSE: docker compose -f sut/docker-compose.yml -f tests/infra/docker-compose.qa.yml
+  PLAYWRIGHT_IMAGE: mcr.microsoft.com/playwright:v1.48.2-jammy
+  K6_IMAGE: grafana/k6:0.54.0
+
+jobs:
+  g0-integrity:
+    name: G0 · Integridade do SUT
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar manifesto SHA-256 do SUT
+        run: bash scripts/verify-sut-integrity.sh
+
+  g1-static:
+    name: G1 · Qualidade do código de teste e rastreabilidade
+    needs: g0-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: tests/web/package-lock.json
+      - name: Rastreabilidade (IDs, cobertura e matriz atualizada)
+        run: node scripts/traceability.mjs --check
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: API — formatação (Spotless) e compilação
+        run: mvn -B -f tests/api/pom.xml spotless:check test-compile
+      - name: Web — tipos, lint e formatação
+        working-directory: tests/web
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: |
+          npm ci
+          npm run verify
+
+  g3-api:
+    name: G3 · API e integração
+    needs: g1-static
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: G2 · Subir o SUT do zero (com proxy de falhas)
+        run: $COMPOSE up --build -d
+      - name: G2 · Prontidão e aquecimento
+        run: bash scripts/wait-for-sut.sh 300
+      - name: Gate — suíte de API sem defeitos conhecidos
+        run: mvn -B -f tests/api/pom.xml test -DexcludedGroups=defeito-conhecido
+      - name: Defeitos conhecidos (não bloqueante; avaliado no G7)
+        if: always()
+        continue-on-error: true
+        run: >-
+          mvn -B -f tests/api/pom.xml test -Dgroups=defeito-conhecido
+          -Dsurefire.reportsDirectory=target/known-defects-reports
+      - name: Resumo
+        if: always()
+        run: |
+          node scripts/summarize-junit.mjs tests/api/target/surefire-reports --failures --markdown "G3 · API — gate" >> "$GITHUB_STEP_SUMMARY"
+          node scripts/summarize-junit.mjs tests/api/target/known-defects-reports --failures --markdown "API — defeitos conhecidos" >> "$GITHUB_STEP_SUMMARY"
+      - name: Logs do SUT em caso de falha
+        if: failure()
+        run: $COMPOSE logs --no-color > sut-logs.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-reports
+          path: |
+            tests/api/target/surefire-reports
+            tests/api/target/known-defects-reports
+            tests/api/target/allure-results
+            sut-logs.txt
+          if-no-files-found: ignore
+
+  g4-web:
+    name: G4 · Web E2E (Chromium)
+    needs: g1-static
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: G2 · Subir o SUT do zero (com proxy de falhas)
+        run: $COMPOSE up --build -d
+      - name: G2 · Prontidão e aquecimento
+        run: bash scripts/wait-for-sut.sh 300
+      # Os testes rodam na imagem oficial do Playwright (navegadores já instalados, sem download:
+      # mitigação do risco aceito na ADR-QA-003) com a rede do host: o front-end é acessado por
+      # localhost, o modo suportado pelo SUT (fora dele a aplicação não opera — H-18, #20).
+      # O socket e o CLI do Docker do runner são montados para o caso de redeploy (CT-WEB-056).
+      - name: Preparar execução em container
+        run: |
+          compose_plugin="$(docker info --format '{{range .ClientInfo.Plugins}}{{if eq .Name "compose"}}{{.Path}}{{end}}{{end}}')"
+          {
+            echo "DOCKER_BIN=$(command -v docker)"
+            echo "COMPOSE_PLUGIN_DIR=$(dirname "$compose_plugin")"
+          } >> "$GITHUB_ENV"
+      - name: Gate — suíte web sem defeitos conhecidos
+        run: >-
+          docker run --rm --ipc=host --network host
+          -v "$GITHUB_WORKSPACE:/work" -w /work/tests/web
+          -v /var/run/docker.sock:/var/run/docker.sock
+          -v "$DOCKER_BIN:/usr/bin/docker:ro" -v "$COMPOSE_PLUGIN_DIR:/usr/libexec/docker/cli-plugins:ro"
+          -e CI=true
+          "$PLAYWRIGHT_IMAGE"
+          bash -c "npm ci && npx playwright test --project=chromium --grep-invert @defeito-conhecido"
+      - name: Defeitos conhecidos (não bloqueante; avaliado no G7)
+        if: always()
+        continue-on-error: true
+        run: >-
+          docker run --rm --ipc=host --network host
+          -v "$GITHUB_WORKSPACE:/work" -w /work/tests/web
+          -v /var/run/docker.sock:/var/run/docker.sock
+          -v "$DOCKER_BIN:/usr/bin/docker:ro" -v "$COMPOSE_PLUGIN_DIR:/usr/libexec/docker/cli-plugins:ro"
+          -e CI=true
+          -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-results/known-defects-junit.xml
+          "$PLAYWRIGHT_IMAGE"
+          bash -c "npx playwright test --project=chromium --grep @defeito-conhecido --output=test-results/known-defects --reporter=list,junit"
+      - name: Resumo
+        if: always()
+        run: |
+          node scripts/summarize-junit.mjs tests/web/test-results/junit.xml --failures --markdown "G4 · Web — gate" >> "$GITHUB_STEP_SUMMARY"
+          node scripts/summarize-junit.mjs tests/web/test-results/known-defects-junit.xml --failures --markdown "Web — defeitos conhecidos" >> "$GITHUB_STEP_SUMMARY"
+      - name: Logs do SUT em caso de falha
+        if: failure()
+        run: $COMPOSE logs --no-color > sut-logs.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-reports
+          path: |
+            tests/web/playwright-report
+            tests/web/test-results
+            sut-logs.txt
+          if-no-files-found: ignore
+
+  g5-performance:
+    name: G5 · Performance
+    needs: g1-static
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: G2 · Subir o SUT do zero (com proxy de falhas)
+        run: $COMPOSE up --build -d
+      - name: G2 · Prontidão e aquecimento
+        run: bash scripts/wait-for-sut.sh 300
+      - name: Gate — smoke de performance (CT-PRF-001)
+        if: github.event_name != 'workflow_dispatch'
+        run: bash tests/performance/run.sh smoke
+      - name: Gate — carga nominal (CT-PRF-002) na develop/main
+        if: github.event_name == 'push'
+        run: bash tests/performance/run.sh load
+      - name: Cenário sob demanda (${{ inputs.performance_profile }})
+        if: github.event_name == 'workflow_dispatch'
+        run: bash tests/performance/run.sh "${{ inputs.performance_profile }}"
+      - name: Resumo
+        if: always()
+        run: |
+          for f in tests/performance/results/*-summary.txt; do
+            [ -f "$f" ] || continue
+            { echo "### G5 · $(basename "$f" -summary.txt)"; echo '```'; cat "$f"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-results
+          path: tests/performance/results
+          if-no-files-found: ignore
+
+  g7-deploy:
+    name: G7 · Decisão de deploy
+    needs: [g0-integrity, g1-static, g3-api, g4-web, g5-performance]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - name: Bloquear com defeito S1/S2 aberto (salvo exceção aprovada)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          blocking="$(for severity in S1-critica S2-alta; do
+              gh issue list --repo "$GITHUB_REPOSITORY" --state open --label defeito --label "$severity" \
+                --json number,title,labels --jq '.[] | select([.labels[].name] | index("excecao-aprovada") | not) | "#\(.number) \(.title)"'
+            done)"
+          {
+            echo "### G7 · Decisão de deploy (${GITHUB_REF_NAME})"
+            if [ -n "$blocking" ]; then
+              echo "**Deploy bloqueado** — defeitos S1/S2 abertos sem exceção aprovada (label \`excecao-aprovada\`):"
+              while IFS= read -r issue; do echo "- ${issue}"; done <<< "$blocking"
+            else
+              echo "Nenhum defeito S1/S2 aberto sem exceção. Gates G0–G5 aprovados."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$blocking" ]; then
+            echo "::error::Deploy bloqueado por defeitos S1/S2 abertos"
+            echo "$blocking"
+            exit 1
+          fi
+      - name: Deploy (simulado)
+        run: echo "Deploy liberado para ${{ github.ref_name == 'main' && 'produção' || 'homologação' }} — commit ${GITHUB_SHA::7}"
