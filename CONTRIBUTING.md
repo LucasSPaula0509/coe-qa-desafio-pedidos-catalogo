@@ -1,6 +1,6 @@
 # Guia de Contribuição
 
-Convenções de trabalho do projeto de qualidade. Os critérios de bloqueio de PR estão no guia de governança de qualidade (entregável da Parte diferenciais).
+Convenções de trabalho do projeto de qualidade. Os critérios de bloqueio de PR estão no [guia de governança de qualidade](docs/quality-governance-guide.md).
 
 ## Regra de ouro
 
