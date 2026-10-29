@@ -1,0 +1,16 @@
+# Arquivos do projeto de qualidade: LF no repositório, independentemente do SO.
+* text=auto eol=lf
+
+# Scripts de shell precisam de LF para executar no runner Linux.
+*.sh text eol=lf
+
+# Binários
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary
+
+# Sistema sob teste (SUT): bytes preservados exatamente como recebidos.
+# Sem normalização de fim de linha — garante que o manifesto sut.sha256
+# continue válido em qualquer máquina (inclusive Windows com core.autocrlf=true).
+sut/** -text
