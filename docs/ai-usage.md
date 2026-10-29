@@ -85,6 +85,7 @@ Evidência de que as saídas são validadas, e não aceitas por confiança:
 | 18 | CT-SEC-006 (JSON com 10.000 níveis) levou 21 s | Parecia lentidão do serviço, mas a medição no servidor deu 1–2 ms: o filtro do Allure formatava o corpo recursivamente no cliente | Medição com cliente sem o filtro do relatório; não registrado como defeito |
 | 18 | Números de Issue antecipados no `@KnownDefect` (21 a 23) | PRs e Issues compartilham a numeração do GitHub; os números reais foram 25 a 28 | Anotações corrigidas após a criação e conferidas com `gh issue list` |
 | 18 | CT-SEC-012 esperava `405` para `PUT`/`PATCH`/`DELETE` | A semântica do 405 já é coberta por TRV-007/CAT-021; o risco de segurança é a escrita ter sucesso | Expectativa refinada: nenhum status de sucesso e dados inalterados |
+| 18 | Passo de defeitos conhecidos do G6 com API e interface no mesmo `run` | **G6 verde no PR #29, mas o CT-SEC-008 não rodou**: o shell do Actions usa `bash -e`, e a falha esperada do Maven encerrou o passo antes do Playwright. Detectado na auditoria do log ("não aceite o verde") | Um passo por suíte, cada um com `continue-on-error`; actionlint aprovado; confirmação no CI do PR #30 |
 
 ## Uso responsável
 
