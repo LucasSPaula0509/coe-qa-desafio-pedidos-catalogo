@@ -2,10 +2,11 @@
 // 2 VUs por 1 min com todas as operações do mix; 100% dos checks, 0% de erro, p95 dentro do NF-01.
 
 import { mixedIteration } from '../lib/operations.js';
-import { sloThresholds } from '../lib/config.js';
+import { sloThresholds, SUMMARY_TREND_STATS } from '../lib/config.js';
 import { summaryHandler } from '../lib/summary.js';
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: {
     smoke: { executor: 'constant-vus', vus: 2, duration: __ENV.DURATION || '1m' },
   },

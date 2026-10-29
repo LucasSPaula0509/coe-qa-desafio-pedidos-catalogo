@@ -3,10 +3,11 @@
 // p95/p99 por operação dentro do NF-01. HOLD permite encurtar a sustentação (ex.: HOLD=3m).
 
 import { mixedIteration } from '../lib/operations.js';
-import { sloThresholds } from '../lib/config.js';
+import { sloThresholds, SUMMARY_TREND_STATS } from '../lib/config.js';
 import { summaryHandler } from '../lib/summary.js';
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: {
     load: {
       executor: 'ramping-vus',

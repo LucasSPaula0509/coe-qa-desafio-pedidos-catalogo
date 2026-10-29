@@ -108,7 +108,7 @@ Sequência por fase. Cada fase termina com PR revisado para `develop` e só come
 | 2. API | Projeto Maven, cliente/builders, schemas, CT-ORD/CAT/TRV/INT (incluindo injeção de falhas) | Casos P1/P2 automatizados; H-01..H-07 e H-09 confirmadas ou descartadas |
 | 3. Web | Projeto Playwright, helper de i18n, Page Objects, CT-WEB | Casos P1/P2 automatizados, sem instabilidade em 5 execuções seguidas |
 | 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | ✅ Esteira com gates G0–G5 e G7 (G6 entra com a segurança); deploy condicionado à severidade das Issues (ADR-QA-007) |
-| 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | Critérios de saída (§5) avaliados e documentados |
+| 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | ✅ Execução de referência no CI; 15 Issues; critérios de saída avaliados no resumo de qualidade (não atendidos: defeitos S2 abertos) |
 | Dif. | Segurança (CT-SEC + ZAP), guia de governança, dimensionamento, apresentação | Artefatos revisados e publicados |
 
 ## 10. Papéis e responsabilidades

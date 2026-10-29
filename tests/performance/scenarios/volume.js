@@ -4,7 +4,7 @@
 
 import http from 'k6/http';
 import { check, sleep } from 'k6';
-import { ORDER_URL } from '../lib/config.js';
+import { ORDER_URL, SUMMARY_TREND_STATS } from '../lib/config.js';
 import { summaryHandler } from '../lib/summary.js';
 
 const MIN_ORDERS = Number(__ENV.MIN_ORDERS || 10000);
@@ -12,6 +12,7 @@ const BATCH = 50;
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   setupTimeout: '30m',
   scenarios: {
     volume: { executor: 'constant-vus', vus: 20, duration: __ENV.DURATION || '5m' },

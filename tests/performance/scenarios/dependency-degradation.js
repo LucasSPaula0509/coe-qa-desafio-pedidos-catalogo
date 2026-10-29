@@ -4,13 +4,14 @@
 
 import http from 'k6/http';
 import { mixedIteration } from '../lib/operations.js';
-import { PROXY_ADMIN_URL, sloThresholds } from '../lib/config.js';
+import { PROXY_ADMIN_URL, sloThresholds, SUMMARY_TREND_STATS } from '../lib/config.js';
 import { summaryHandler } from '../lib/summary.js';
 
 const DELAY_MS = 1000;
 const JSON_HEADERS = { headers: { 'Content-Type': 'application/json' } };
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: {
     degraded: {
       executor: 'ramping-vus',

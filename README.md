@@ -13,7 +13,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | 2 | Automação de API (Java + RestAssured): 111 casos, injeção de falhas, 9 defeitos confirmados | ✅ Concluída |
 | 3 | Automação de front-end (Playwright): 48 casos, pt-BR/en/es, acessibilidade, 6 defeitos confirmados | ✅ Concluída |
 | 4 | Performance (k6, 8 cenários) e esteira GitHub Actions com quality gates G0–G7 | ✅ Concluída |
-| 5 | Relatório de execução, Issues de defeito, resumo de qualidade | ⏳ Planejada |
+| 5 | Relatório de execução (referência no CI), 15 defeitos como Issues, resumo de qualidade com recomendação de release | ✅ Concluída |
 | Diferenciais | IA aplicada, segurança, governança, dimensionamento | ⏳ Em andamento (log de IA ativo) |
 
 ## Estrutura do repositório
@@ -137,6 +137,8 @@ bash tests/performance/run.sh load           # carga nominal (gate na develop/ma
 | [Plano de testes](docs/test-plan.md) | Escopo, critérios de entrada e saída, suspensão, cronograma, papéis, riscos do projeto |
 | [Casos de teste](docs/test-cases/README.md) | 180 casos por área, com técnica, prioridade e nível de execução |
 | [Matriz de rastreabilidade](docs/traceability-matrix.md) | Requisitos ↔ casos ↔ automação (gerada por `scripts/traceability.mjs`) |
+| [**Resumo de qualidade da versão**](docs/quality-summary.md) | Recomendação de release, defeitos em linguagem de negócio, riscos, indicadores e evolução |
+| [**Relatório de execução**](docs/test-execution/README.md) | Execução de referência no CI (gates, suítes, desempenho, decisão de deploy) e histórico |
 | [Execução da suíte de API](docs/test-execution/api-2026-10-29.md) | Resultado, estabilidade (3 execuções idênticas) e defeitos confirmados |
 | [Execução da suíte web](docs/test-execution/web-2026-10-29.md) | Resultado, estabilidade, prova de oráculo e defeitos da interface |
 | [Execução de performance](docs/test-execution/performance-2026-10-29.md) | Smoke aprovado e validação dos 8 cenários k6 |

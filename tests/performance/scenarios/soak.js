@@ -3,7 +3,7 @@
 // As janelas "first" e "last" são cenários sequenciais com tag própria; a comparação vai no resumo.
 
 import { mixedIteration } from '../lib/operations.js';
-import { sloThresholds } from '../lib/config.js';
+import { sloThresholds, SUMMARY_TREND_STATS } from '../lib/config.js';
 import { p95, summaryHandler } from '../lib/summary.js';
 
 const totalMinutes = Number((__ENV.DURATION || '60m').replace('m', ''));
@@ -11,6 +11,7 @@ const quarter = Math.max(1, Math.floor(totalMinutes / 4));
 const middle = Math.max(1, totalMinutes - 2 * quarter);
 
 export const options = {
+  summaryTrendStats: SUMMARY_TREND_STATS,
   scenarios: {
     first: { executor: 'constant-vus', vus: 30, duration: `${quarter}m`, tags: { window: 'first' } },
     middle: { executor: 'constant-vus', vus: 30, duration: `${middle}m`, startTime: `${quarter}m` },
