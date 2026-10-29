@@ -85,7 +85,7 @@ Ver [estratégia §2](test-strategy.md#2-escopo): testes unitários e de compone
 | Defeitos | Issues do GitHub | 5 |
 | Resumo de qualidade | `docs/quality-summary.md` | 5 |
 | Uso de IA | `docs/ai-usage.md` + link da conversa | Todas |
-| Guia de governança e dimensionamento | `docs/` | Dif. |
+| Guia de governança e dimensionamento | `docs/quality-governance-guide.md`, `docs/proposal-sizing.md` | Dif. |
 
 ## 8. Ambiente e ferramentas
 
@@ -109,7 +109,7 @@ Sequência por fase. Cada fase termina com PR revisado para `develop` e só come
 | 3. Web | Projeto Playwright, helper de i18n, Page Objects, CT-WEB | Casos P1/P2 automatizados, sem instabilidade em 5 execuções seguidas |
 | 4. Performance e CI/CD | Scripts k6 e workflow com gates G0–G7 | ✅ Esteira com gates G0–G7 (G6 adicionado com a segurança); deploy condicionado à severidade das Issues (ADR-QA-007) |
 | 5. Execução e reporte | Execução completa, Issues, relatório, resumo de qualidade | ✅ Execução de referência no CI; 15 Issues (19 com a segurança); critérios de saída avaliados no resumo de qualidade (não atendidos: defeitos S2 abertos) |
-| Dif. | Segurança (CT-SEC), guia de governança, dimensionamento, apresentação | Segurança ✅: 14 casos, gate G6, 4 Issues (#25 a #28); DAST/SCA fora do escopo por decisão |
+| Dif. | Segurança (CT-SEC), guia de governança, dimensionamento, apresentação | ✅ Segurança: 14 casos, gate G6, 4 Issues (#25 a #28), sem DAST/SCA por decisão. Governança e dimensionamento publicados |
 
 ## 10. Papéis e responsabilidades
 
