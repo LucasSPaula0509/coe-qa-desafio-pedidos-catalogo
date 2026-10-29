@@ -22,7 +22,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 sut/                     Sistema sob teste — NÃO ALTERAR (ver ADR-QA-001)
   docs/                  Base de teste oficial (requisitos, contratos, dados, ADRs do SUT)
 sut.sha256               Manifesto de integridade do SUT (219 arquivos)
-scripts/                 verify-sut-integrity.sh, traceability.mjs, summarize-junit.mjs, wait-for-sut.sh
+scripts/                 verify-sut-integrity.sh, traceability.mjs, summarize-junit.mjs, start-sut.sh, wait-for-sut.sh
 specs/                   Especificação SDD: regras testáveis (RN), questões e suspeitas (Q/H)
 docs/
   test-strategy.md       Estratégia de testes

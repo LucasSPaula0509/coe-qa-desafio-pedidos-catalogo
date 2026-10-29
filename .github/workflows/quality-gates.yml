@@ -2,7 +2,8 @@
 # (docs/test-strategy.md §12; ADR-QA-007).
 #
 #   G0 integridade do SUT          → G1 qualidade do código de teste + rastreabilidade
-#   G2 ambiente saudável (em cada job de suíte: compose do zero + prontidão + aquecimento)
+#   G2 ambiente saudável (em cada job de suíte: compose do zero com nova tentativa na build,
+#      prontidão + aquecimento)
 #   G3 API + integração            G4 web E2E (Chromium, imagem oficial do Playwright)
 #   G5 performance (smoke em todo PR; carga nominal na develop/main)
 #   G6 segurança                   → adicionado com a suíte de segurança (Parte diferenciais)
@@ -87,7 +88,7 @@ jobs:
           java-version: "17"
           cache: maven
       - name: G2 · Subir o SUT do zero (com proxy de falhas)
-        run: $COMPOSE up --build -d
+        run: bash scripts/start-sut.sh
       - name: G2 · Prontidão e aquecimento
         run: bash scripts/wait-for-sut.sh 300
       - name: Gate — suíte de API sem defeitos conhecidos
@@ -124,7 +125,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: G2 · Subir o SUT do zero (com proxy de falhas)
-        run: $COMPOSE up --build -d
+        run: bash scripts/start-sut.sh
       - name: G2 · Prontidão e aquecimento
         run: bash scripts/wait-for-sut.sh 300
       # Os testes rodam na imagem oficial do Playwright (navegadores já instalados, sem download:
@@ -184,7 +185,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: G2 · Subir o SUT do zero (com proxy de falhas)
-        run: $COMPOSE up --build -d
+        run: bash scripts/start-sut.sh
       - name: G2 · Prontidão e aquecimento
         run: bash scripts/wait-for-sut.sh 300
       - name: Gate — smoke de performance (CT-PRF-001)

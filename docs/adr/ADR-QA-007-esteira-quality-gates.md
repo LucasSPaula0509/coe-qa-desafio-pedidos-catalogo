@@ -18,7 +18,7 @@ Workflow único (`.github/workflows/quality-gates.yml`), disparado em PR, em pus
 |---|---|---|---|
 | G0 | `g0-integrity` | Sim | Manifesto SHA-256 do SUT |
 | G1 | `g1-static` | Sim | Rastreabilidade (`--check`), Spotless + compilação da API, `tsc` + ESLint + Prettier da web |
-| G2 | Em cada job de suíte | Sim | Compose **do zero** (com o proxy de falhas), prontidão dos 5 componentes e aquecimento (`scripts/wait-for-sut.sh`) |
+| G2 | Em cada job de suíte | Sim | Compose **do zero** (com o proxy de falhas), com **até 3 tentativas na build** (`scripts/start-sut.sh`: a build do SUT baixa dependências do Maven Central e do npm, sujeitas a falhas transitórias), prontidão dos 5 componentes e aquecimento (`scripts/wait-for-sut.sh`) |
 | G3 | `g3-api` | Sim | `mvn test -DexcludedGroups=defeito-conhecido` |
 | G4 | `g4-web` | Sim | Playwright na **imagem oficial 1.48.2** (sem download de navegador: mitigação da ADR-QA-003), rede do host, `--grep-invert @defeito-conhecido` |
 | G5 | `g5-performance` | Sim | k6 em container: smoke em todo PR; carga nominal em push para `develop`/`main`; qualquer cenário sob demanda |
