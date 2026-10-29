@@ -28,7 +28,7 @@ Estrutura baseada na ISO/IEC/IEEE 29119-3 (plano de teste). A abordagem técnica
 | Performance e carga | NF-01, NF-02 | [performance.md](test-cases/performance.md) |
 | Segurança | NF-03 | [security.md](test-cases/security.md) |
 
-Total: **179 casos** (81 P1, 72 P2, 26 P3). A distribuição detalhada está na [matriz de rastreabilidade](traceability-matrix.md).
+Total: **180 casos** (82 P1, 72 P2, 26 P3). A distribuição detalhada está na [matriz de rastreabilidade](traceability-matrix.md).
 
 ### 2.2 Funcionalidades fora do escopo
 
@@ -38,7 +38,7 @@ Ver [estratégia §2](test-strategy.md#2-escopo): testes unitários e de compone
 
 | Suíte | Ferramenta | Casos | Execução |
 |---|---|---|---|
-| API + integração + transversais | Java 17, JUnit 5, RestAssured (ADR-QA-002) | 110 | Todo PR (P1/P2); `develop` (P1–P3) |
+| API + integração + transversais | Java 17, JUnit 5, RestAssured (ADR-QA-002) | 111 | Todo PR (P1/P2); `develop` (P1–P3) |
 | Web E2E | Playwright (ADR-QA-003) | 45 | Todo PR (P1/P2, Chromium); `develop` (P1–P3, 3 navegadores) |
 | Performance | k6 (ADR-QA-004) | 8 | Smoke em todo PR; carga na `develop`/release; demais sob demanda |
 | Segurança | RestAssured/Playwright + OWASP ZAP + Trivy | 16 | Todo PR (SEC + ZAP baseline); SCA na `develop` |
@@ -134,6 +134,7 @@ Papéis do cenário de referência (equipe de QA sênior + pleno, em parceria co
 | RP-06 | Esteira permanentemente vermelha por defeitos reais do SUT | Alta | Médio | Política de defeitos conhecidos (estratégia §12): visibilidade sem esconder testes | Exceção formal registrada pelo Client Face |
 | RP-07 | Data fixa da massa (PROD-005 passa a ter preço em 2030-01-01) | Baixa (no prazo) | Médio | Risco temporal documentado em `api-catalog.md`; o teste falha com mensagem explícita | Revisar a massa e os casos afetados |
 | RP-08 | Interpretações (Q-xx) não confirmadas pelos stakeholders | Média | Médio | Interpretação explícita por Q; casos afetados listados | Reclassificar casos e defeitos quando houver decisão |
+| RP-09 | **Picos de latência no ambiente local** (Docker Desktop + WSL2): o catálogo registrou p99 de 6,4 s e máximo de 35,7 s com CPU ociosa. Combinados com a H-11, causam `500` esporádicos em criações válidas | Média (local) | Médio | CI (Linux) como execução de referência; toda falha não determinística é reexecutada antes de virar conclusão; a prova de estabilidade da suíte é feita com 3 execuções completas idênticas | Reexecutar a suíte isoladamente e comparar com o CI; aquecimento do ambiente antes da suíte (Parte 4) |
 
 ## 12. Comunicação
 
