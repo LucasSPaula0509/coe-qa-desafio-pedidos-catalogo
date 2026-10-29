@@ -237,12 +237,17 @@ jobs:
           -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-results/security-junit.xml
           "$PLAYWRIGHT_IMAGE"
           bash -c "npm ci && npx playwright test --project=chromium --grep @security --grep-invert @defeito-conhecido --output=test-results/security --reporter=list,junit"
-      - name: Defeitos conhecidos de segurança (não bloqueante; avaliado no G7)
+      # Um passo por suíte: a falha esperada da API não pode impedir a execução da interface.
+      - name: Defeitos conhecidos de segurança — API (não bloqueante; avaliado no G7)
+        if: always()
+        continue-on-error: true
+        run: >-
+          mvn -B -f tests/api/pom.xml test "-Dgroups=security & defeito-conhecido"
+          -Dsurefire.reportsDirectory=target/security-known-defects-reports
+      - name: Defeitos conhecidos de segurança — interface (não bloqueante; avaliado no G7)
         if: always()
         continue-on-error: true
         run: |
-          mvn -B -f tests/api/pom.xml test "-Dgroups=security & defeito-conhecido" \
-            -Dsurefire.reportsDirectory=target/security-known-defects-reports
           docker run --rm --ipc=host --network host \
             -v "$GITHUB_WORKSPACE:/work" -w /work/tests/web -e CI=true \
             -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-results/security-known-defects-junit.xml \
