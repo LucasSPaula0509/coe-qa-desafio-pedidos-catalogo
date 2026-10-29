@@ -79,6 +79,9 @@ Carga nominal: 30 usuários virtuais por 10 min (rampa de 2 min, descida de 1 mi
 | [PR #22](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/actions/runs/40931161100) e `develop` após o #22 | Falha no G2 | **`502 Bad Gateway` do Maven Central** na build do SUT (externo, transitório). Não é defeito. Mitigado com nova tentativa na build (PR #23) |
 | [PR #23](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/actions/runs/40932249640) | Gates verdes | Correções confirmadas no Linux: os 3 artefatos publicados e os relatórios separados |
 | **[`develop` após o #23](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/actions/runs/40932400876)** | **G0–G5 verdes; G7 bloqueou o deploy** | **Execução de referência** (acima) |
+| [PR #29](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/actions/runs/40940052905) (segurança) | Gates verdes, incluindo o novo G6 | A auditoria do log mostrou que o CT-SEC-008 **não executava**: com `bash -e`, a falha esperada do Maven encerrava o passo antes do Playwright. Corrigido no PR #31 |
+| [PR #31](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/actions/runs/40942668687) | Gates verdes | Correção confirmada: CT-SEC-008 executado e reprovado como esperado (#26) |
+| [`develop` após o #31](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/actions/runs/40942830709) | **G0–G6 verdes; G7 bloqueou o deploy** (#4, #5, #14, #16) | Primeira execução completa com segurança (21 min 33 s). Resultados iguais aos da referência: API 129/129 (defeitos conhecidos: 44 falhas em 61), web 47/47 (6 defeitos conhecidos), G6 20/20 + 1/1 (4 defeitos conhecidos). Carga nominal: 10.353 requisições, 0% de erro, `POST /orders` com p95 de 26,9 ms e p99 de 64,6 ms |
 
 ## Como acessar as evidências
 
@@ -88,7 +91,7 @@ Carga nominal: 30 usuários virtuais por 10 min (rampa de 2 min, descida de 1 mi
 | Relatórios da API (JUnit XML, Allure com requisição e resposta de cada chamada) | Artefato `api-reports` → `npx allure-commandline serve tests/api/target/allure-results` |
 | Relatório da web (HTML com trace, screenshot e vídeo das falhas; JUnit) | Artefato `web-reports` → `npx playwright show-report tests/web/playwright-report` |
 | Resultados do k6 (texto e JSON) | Artefato `performance-results` |
-| Defeitos | [Issues com label `defeito`](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues?q=label%3Adefeito) (#4 a #20) |
+| Defeitos | [Issues com label `defeito`](https://github.com/LucasSPaula0509/coe-qa-desafio-pedidos-catalogo/issues?q=label%3Adefeito) (#4 a #28) |
 
 ## Registros detalhados por suíte
 
