@@ -148,6 +148,7 @@ bash tests/performance/run.sh load           # carga nominal (gate na develop/ma
 | [Execução de segurança](docs/test-execution/security-2026-10-29.md) | Proteções verificadas (OWASP) e defeitos de segurança |
 | [**Guia de governança de qualidade**](docs/quality-governance-guide.md) | Papéis, definição de pronto, critérios que bloqueiam o PR, severidade e métricas para squads |
 | [**Dimensionamento da proposta**](docs/proposal-sizing.md) | Partes 1–5 em 3 semanas com QA sênior + pleno: esforço, senioridade, premissas e riscos |
+| [Apresentação](https://claude.ai/artifact/M4RsegysnYqoSp7vgjCqZZ) | 14 slides para os avaliadores: abordagem, evidências, defeitos e recomendação de release (com notas do apresentador) |
 | [Uso de IA](docs/ai-usage.md) | Ferramenta, motivo, prompts, decisões e validações por etapa |
 | [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance), SDD, injeção de falhas e dados, esteira de quality gates |
 | [Guia de contribuição](CONTRIBUTING.md) | GitFlow, commits, PRs e registro de defeitos |
