@@ -57,7 +57,7 @@ Aplicação: `http://localhost:4200` (SPA Angular servida por nginx, que faz o p
 | CT-WEB-041 | Criar sem itens | Cliente válido, nenhum item | Aviso de formulário inválido; nenhum `POST /orders` | RN-31, RN-02 | PE | P2 | WEB |
 | CT-WEB-042 | Erro de regra de negócio na criação | `POST /orders` interceptado: `422 PRODUCT_INACTIVE` com `requestId` conhecido | Mensagem "Produto inativo no catálogo." com `requestId`; permanece no formulário com os dados preservados; botão habilitado de novo | RN-31, RN-34 | PE | P2 | WEB+MOCK |
 | CT-WEB-043 | Catálogo indisponível na criação | `POST /orders` interceptado: `503 CATALOG_UNAVAILABLE` | Mensagem "Serviço de catálogo indisponível…" com `requestId`; dados preservados | RN-31, RN-34, RN-10 | PE | P2 | WEB+MOCK |
-| CT-WEB-044 | Cancelar com e sem dados | (a) com dados → Cancelar → "Descartar e sair"; (b) com dados → Cancelar → fechar o diálogo; (c) sem dados → Cancelar | (a) vai para `/orders`; (b) permanece com os dados; (c) vai direto para `/orders`, sem diálogo | RN-31 | TD | P3 | WEB |
+| CT-WEB-044 | Cancelar com e sem dados | (a) com dados → Cancelar → "Descartar e sair"; (b) com dados → Cancelar → fechar o diálogo; (c) sem dados → Cancelar | (a) vai para `/orders`; (b) permanece com os dados; (c) vai direto para `/orders`, sem diálogo | RN-31, H-14 | TD | P3 | WEB |
 | CT-WEB-045 | Duplo clique em "Criar pedido" | Formulário válido; dois cliques rápidos | Exatamente **1** `POST /orders` e 1 pedido criado | RN-31 | SE | P2 | WEB |
 
 ## E. Pedidos (listagem e detalhe)
@@ -65,18 +65,19 @@ Aplicação: `http://localhost:4200` (SPA Angular servida por nginx, que faz o p
 | ID | Cenário | Entrada / pré-condição | Resultado esperado | Ref. | Técnica | Prio | Nível |
 |---|---|---|---|---|---|---|---|
 | CT-WEB-050 | Pedido recém-criado no topo da lista | Pedido criado via API no setup | Primeira linha: id curto (13 caracteres + "…", id completo no tooltip), nome do cliente, quantidade de itens, subtotal, desconto, total, situação "Criado" e data, coerentes com a API | RN-32, RN-17 | CU | P1 | WEB |
-| CT-WEB-051 | Paginação | ≥ 21 pedidos no ambiente | Controle de paginação visível. A página 2 exibe os pedidos de `GET ?page=1&size=20`, na mesma ordem | RN-32, RN-17 | CU | P2 | WEB |
+| CT-WEB-051 | Paginação | ≥ 21 pedidos no ambiente | Controle de paginação visível. A página 2 exibe os pedidos de `GET ?page=1&size=20`, na mesma ordem | RN-32, RN-17, H-15 | CU | P2 | WEB |
 | CT-WEB-052 | Detalhe a partir da lista | Clicar em "Ver" no pedido do setup | Detalhe com o cliente (nome, documento, e-mail), o resumo (id, situação, data, subtotal, desconto, total) e os itens (produto, ID, quantidade, preço unitário, total), iguais ao `GET /orders/{id}` | RN-32, RN-16 | CU | P1 | WEB |
 | CT-WEB-053 | Detalhe de pedido inexistente | Abrir `/orders/<uuid-aleatório>` | Mensagem "Pedido não encontrado." com `requestId` | RN-32, RN-34 | PE | P2 | WEB |
 | CT-WEB-054 | Lista vazia | API interceptada: página vazia | Estado vazio com ação "Novo pedido", que navega para `/orders/new` | RN-32 | PE | P3 | WEB+MOCK |
 | CT-WEB-055 | Voltar do detalhe | No detalhe, clicar em "Voltar" | Retorna para `/orders` | RN-32 | CU | P3 | WEB |
+| CT-WEB-056 | Lista de pedidos continua disponível após **redeploy** do `order-service` | `order-service` recriado com outro IP (o IP anterior é ocupado por um container descartável para forçar a troca); o front-end **não** é reiniciado | A tela de Pedidos carrega a listagem normalmente (o proxy do front-end acompanha o novo endereço). Ambiente restaurado ao final | RN-32, RN-34, H-13 | SE | P2 | WEB |
 
 ## F. Idiomas
 
 | ID | Cenário | Entrada / pré-condição | Resultado esperado | Ref. | Técnica | Prio | Nível |
 |---|---|---|---|---|---|---|---|
 | CT-WEB-060 | Troca de idioma em tempo de execução | pt-BR → en → es pelo seletor | Menu, títulos e rótulos mudam para o idioma escolhido (oráculo: JSON de tradução) **sem recarregar a página** (nenhum evento de navegação ou *load*) | RN-33 | CU | P1 | WEB |
-| CT-WEB-061 | Formatação de moeda e data por idioma | Detalhe de um pedido conhecido em pt-BR, en e es | Valores e datas formatados como `Intl.NumberFormat`/`DateTimeFormat` no locale correspondente (BRL, 2 casas) | RN-33 | PE | P2 | WEB |
+| CT-WEB-061 | Formatação de moeda e data por idioma | Detalhe de um pedido conhecido em pt-BR, en e es | Valores e datas formatados como `Intl.NumberFormat`/`DateTimeFormat` no locale correspondente (BRL, 2 casas) | RN-33, H-17 | PE | P2 | WEB |
 | CT-WEB-062 | Preferência de idioma persistida | Escolher es e recarregar a página | Interface continua em es; `localStorage['app-language']` = `es` | RN-33 | CU | P2 | WEB |
 | CT-WEB-063 | Fluxos principais em cada idioma | Parametrizado (pt-BR, en, es): CT-WEB-020 e CT-WEB-030 | Fluxos concluídos com os textos do idioma corrente | RN-33, RN-30, RN-31 | PE | P2 | WEB |
 | CT-WEB-064 | Paridade dos arquivos de tradução | `pt-BR.json`, `en.json`, `es.json` | Mesmo conjunto de chaves nos 3 arquivos, nenhum valor vazio e os mesmos *placeholders* (`{{id}}`, `{{ids}}`, `{{name}}`) por chave | RN-33 | CO | P3 | ESTÁTICO |
@@ -86,5 +87,5 @@ Aplicação: `http://localhost:4200` (SPA Angular servida por nginx, que faz o p
 
 | ID | Cenário | Entrada / pré-condição | Resultado esperado | Ref. | Técnica | Prio | Nível |
 |---|---|---|---|---|---|---|---|
-| CT-WEB-070 | Varredura automática de acessibilidade | Painel, Catálogo (com resultados), Novo pedido (com itens), Pedidos, Detalhe | axe-core (WCAG 2.1 A/AA): nenhuma violação de impacto *critical* ou *serious* | NF-04 | CO | P3 | WEB |
+| CT-WEB-070 | Varredura automática de acessibilidade | Painel, Catálogo (com resultados), Novo pedido (com itens), Pedidos, Detalhe | axe-core (WCAG 2.1 A/AA): nenhuma violação de impacto *critical* ou *serious* | NF-04, H-16 | CO | P3 | WEB |
 | CT-WEB-071 | Operação só por teclado | Fluxo do CT-WEB-030 sem mouse | Fluxo concluído com Tab/Enter/Espaço; foco visível | NF-04 | CU | P3 | WEB |
