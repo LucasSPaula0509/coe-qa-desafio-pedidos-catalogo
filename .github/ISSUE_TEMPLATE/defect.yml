@@ -1,0 +1,91 @@
+name: Defeito
+description: Divergência entre o comportamento observado do SUT e a documentação (base de teste).
+title: "[DEF] <componente>: <comportamento observado> em vez de <esperado>"
+labels: ["defeito", "triagem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Registre apenas defeitos **reproduzidos por um caso de teste** (ADR-QA-005).
+        O resultado esperado deve citar a fonte na documentação do SUT (`sut/docs/...`, ADR, PDF do desafio §2.2.2).
+  - type: dropdown
+    id: component
+    attributes:
+      label: Componente
+      options:
+        - order-service
+        - catalog-service
+        - integração order ↔ catalog
+        - frontend
+        - documentação
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidade
+      description: "Impacto no negócio (definições em docs/test-strategy.md, seção de gestão de defeitos)."
+      options:
+        - S1 - Crítica (perda/corrupção de dado, cálculo financeiro errado, indisponibilidade sem contorno)
+        - S2 - Alta (funcionalidade principal falha ou contrato quebrado, com contorno difícil)
+        - S3 - Média (comportamento incorreto com contorno ou em cenário de borda)
+        - S4 - Baixa (cosmético, texto, documentação)
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridade sugerida
+      options:
+        - P1 - Corrigir antes do release
+        - P2 - Corrigir no próximo ciclo
+        - P3 - Backlog
+    validations:
+      required: true
+  - type: input
+    id: test-case
+    attributes:
+      label: Caso de teste e regra
+      placeholder: "CT-ORD-045 → RN-03"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      description: Requisição completa (curl) ou passos de UI, com dados de entrada.
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado (com fonte)
+      placeholder: "422 PRODUCT_NOT_FOUND — sut/docs/api.md, POST /api/v1/orders"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado obtido
+      description: Status, corpo da resposta e X-Request-Id.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências
+      description: Link do relatório/execução do CI, trace do Playwright, trecho de log (com requestId).
+  - type: input
+    id: version
+    attributes:
+      label: Versão / ambiente
+      placeholder: "commit <sha> — docker compose local (sut/)"
+    validations:
+      required: true
+  - type: textarea
+    id: analysis
+    attributes:
+      label: Análise (opcional)
+      description: Hipótese de causa raiz e uso de IA na análise (o que foi sugerido e como foi validado).
