@@ -1,0 +1,29 @@
+# Build e dependências
+target/
+node_modules/
+dist/
+.angular/
+
+# Resultados e relatórios de execução (publicados como artefatos do CI, não versionados)
+test-results/
+playwright-report/
+blob-report/
+allure-results/
+allure-report/
+reports/
+*.jfr
+
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+
+# IDE e SO
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
