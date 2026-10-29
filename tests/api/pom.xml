@@ -28,6 +28,8 @@
     <!-- Seleção de casos por tag JUnit (ex.: -Dgroups="P1 | P2", -DexcludedGroups=fault) -->
     <groups/>
     <excludedGroups/>
+    <!-- Diretório dos relatórios JUnit (o CI separa gate e defeitos conhecidos: -Dsurefire.reportsDirectory=...) -->
+    <surefire.reportsDirectory>${project.build.directory}/surefire-reports</surefire.reportsDirectory>
   </properties>
 
   <dependencies>
@@ -96,6 +98,7 @@
         <configuration>
           <groups>${groups}</groups>
           <excludedGroups>${excludedGroups}</excludedGroups>
+          <reportsDirectory>${surefire.reportsDirectory}</reportsDirectory>
           <trimStackTrace>true</trimStackTrace>
           <!-- Classpath explícito no fork: o jar de manifesto falha em caminhos com espaço no Windows. -->
           <useManifestOnlyJar>false</useManifestOnlyJar>

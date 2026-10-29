@@ -22,13 +22,17 @@ image="${K6_IMAGE:-grafana/k6:0.54.0}"
 network="${SUT_NETWORK:-sut_default}"
 
 # No Git Bash (Windows), o Docker precisa do caminho no formato do Windows e sem conversão MSYS.
+# No Linux (CI), o container roda com o UID/GID do usuário atual para poder gravar em results/.
 mount="${here}"
+user_args=()
 if command -v cygpath >/dev/null 2>&1; then
   mount="$(cygpath -w "${here}")"
   export MSYS_NO_PATHCONV=1
+else
+  user_args=(--user "$(id -u):$(id -g)")
 fi
 
-docker run --rm \
+docker run --rm "${user_args[@]}" \
   --network "${network}" \
   -v "${mount}:/scripts:ro" \
   -v "${mount}/results:/results" \
