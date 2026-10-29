@@ -14,7 +14,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | 3 | Automação de front-end (Playwright): 48 casos, pt-BR/en/es, acessibilidade, 6 defeitos confirmados | ✅ Concluída |
 | 4 | Performance (k6, 8 cenários) e esteira GitHub Actions com quality gates G0–G7 | ✅ Concluída |
 | 5 | Relatório de execução (referência no CI), 15 defeitos como Issues, resumo de qualidade com recomendação de release | ✅ Concluída |
-| Diferenciais | IA aplicada, segurança, governança, dimensionamento | ⏳ Em andamento (log de IA ativo) |
+| Diferenciais | Segurança (14 casos OWASP, gate G6, 4 defeitos) ✅ · IA aplicada, governança, dimensionamento ⏳ | 🔄 Em andamento |
 
 ## Estrutura do repositório
 
@@ -126,7 +126,8 @@ bash tests/performance/run.sh load           # carga nominal (gate na develop/ma
 | G2 | Ambiente do zero, saudável e aquecido (em cada job de suíte) |
 | G3 / G4 | API e web sem defeitos conhecidos (bloqueantes); defeitos conhecidos em passo não bloqueante, no resumo |
 | G5 | k6: smoke em todo PR; carga nominal na `develop`/`main` |
-| G7 | Deploy (simulado) só com G0–G5 aprovados e **sem defeito S1/S2 aberto** sem o label `excecao-aprovada` |
+| G6 | Segurança: testes dirigidos da API e da interface (OWASP) |
+| G7 | Deploy (simulado) só com G0–G6 aprovados e **sem defeito S1/S2 aberto** sem o label `excecao-aprovada` |
 
 ## Documentação
 
@@ -142,6 +143,7 @@ bash tests/performance/run.sh load           # carga nominal (gate na develop/ma
 | [Execução da suíte de API](docs/test-execution/api-2026-10-29.md) | Resultado, estabilidade (3 execuções idênticas) e defeitos confirmados |
 | [Execução da suíte web](docs/test-execution/web-2026-10-29.md) | Resultado, estabilidade, prova de oráculo e defeitos da interface |
 | [Execução de performance](docs/test-execution/performance-2026-10-29.md) | Smoke aprovado e validação dos 8 cenários k6 |
+| [Execução de segurança](docs/test-execution/security-2026-10-29.md) | Proteções verificadas (OWASP) e defeitos de segurança |
 | [Uso de IA](docs/ai-usage.md) | Ferramenta, motivo, prompts, decisões e validações por etapa |
 | [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance), SDD, injeção de falhas e dados, esteira de quality gates |
 | [Guia de contribuição](CONTRIBUTING.md) | GitFlow, commits, PRs e registro de defeitos |
