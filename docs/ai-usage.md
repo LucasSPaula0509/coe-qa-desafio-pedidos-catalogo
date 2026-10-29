@@ -12,7 +12,7 @@ Um copiloto de autocompletar cobriria só a etapa de automação. Um chat sem ac
 
 **Ferramenta complementar:** SAI APP 3.0 (diferencial avaliado). O uso é registrado nas etapas em que for aplicado.
 
-**Link do chat/conversa com a IA:** `<INSERIR_LINK_DO_CHAT_AQUI>`
+**Link do chat/conversa com a IA:** [ai-chat-log.md](ai-chat-log.md). Sessões locais do Claude Code não geram link público; a conversa foi exportada do histórico local e versionada no repositório (mensagens, respostas e ações do agente, sem as saídas das ferramentas).
 
 ## Metodologia: Spec-Driven Development (SDD)
 

@@ -157,4 +157,4 @@ bash tests/performance/run.sh load           # carga nominal (gate na develop/ma
 
 Ferramenta principal: **Claude Code** (modelo Claude Opus 5.5), agente de IA no VS Code. O motivo da escolha, o log por etapa e as validações estão em [docs/ai-usage.md](docs/ai-usage.md).
 
-**Link da conversa com a IA:** `<INSERIR_LINK_DO_CHAT_AQUI>`
+**Link da conversa com a IA:** [docs/ai-chat-log.md](docs/ai-chat-log.md) (export da sessão local do Claude Code, que não gera link público)
