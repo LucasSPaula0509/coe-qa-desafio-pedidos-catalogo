@@ -1,0 +1,36 @@
+{
+  "name": "web-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Suíte E2E da interface web — Gestão de Pedidos e Catálogo (ADR-QA-003)",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:gate": "playwright test --project=chromium --grep-invert @defeito-conhecido",
+    "test:p1": "playwright test --project=chromium --grep @P1",
+    "test:all-browsers": "playwright test",
+    "report": "playwright show-report",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run lint && npm run format:check"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.1",
+    "@eslint/js": "9.39.5",
+    "@playwright/test": "1.48.2",
+    "@types/node": "20.17.6",
+    "eslint": "9.39.5",
+    "eslint-plugin-playwright": "2.0.1",
+    "prettier": "3.3.3",
+    "typescript": "5.6.3",
+    "typescript-eslint": "8.71.2"
+  },
+  "overrides": {
+    "playwright-core": "1.48.2"
+  }
+}

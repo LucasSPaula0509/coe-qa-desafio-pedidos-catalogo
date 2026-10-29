@@ -72,7 +72,7 @@ O SUT já tem testes de unidade e de componente (com catálogo simulado). Este p
 
 ```
                 ▲ menos testes, mais caros
-   E2E web      │  45 casos (25%)   jornadas, apresentação, i18n, acessibilidade
+   E2E web      │  46 casos (25%)   jornadas, apresentação, i18n, acessibilidade
    Perf / Sec   │  24 casos (13%)   SLOs, carga, OWASP, DAST
    Integração   │  15 casos ( 8%)   serviços reais + injeção de falha
    API          │  96 casos (53%)   regras, cálculo, validação, contrato

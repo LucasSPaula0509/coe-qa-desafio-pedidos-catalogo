@@ -37,3 +37,13 @@ A Parte 3 exige automatizar a interface web (SPA Angular 21 zoneless) para Paine
 - **Negativas:**
   - Localizadores por papel e texto dependem da acessibilidade do SUT. Onde ela falhar, o problema será registrado como achado de acessibilidade, porque não é possível adicionar `data-testid`.
   - Mais uma toolchain (Node) no CI, mitigada por cache.
+
+## Versões e dependências (atualização de 2026-10-29)
+
+- **Playwright fixado em 1.48.2**, por decisão do responsável pelo projeto. Todas as dependências usam versões exatas (`--save-exact`) e o `package-lock.json` é versionado.
+- **Risco aceito:** o `npm audit` aponta a [GHSA-7mvr-c777-76hp](https://github.com/advisories/GHSA-7mvr-c777-76hp) (alta) para Playwright < 1.55.1: o **download dos navegadores** (`npx playwright install`) não verifica o certificado SSL. O risco é restrito à instalação (possível MITM), não à execução dos testes. Mitigação:
+  - no CI, usar a imagem oficial `mcr.microsoft.com/playwright:v1.48.2-jammy`, que já traz os navegadores e elimina o download em tempo de execução;
+  - localmente, instalar os navegadores apenas em rede confiável.
+  A atualização para ≥ 1.55.1 fica registrada como recomendação.
+- **Uma única cópia do `playwright-core`:** o `@axe-core/playwright` declara `playwright-core >= 1.0.0` como dependência *peer*, e o npm instalava uma segunda cópia (1.64.1). O `overrides` do `package.json` força a 1.48.2 em toda a árvore, mantendo a versão decidida e os tipos coerentes.
+- **ESLint 9.39.5** (mesma versão maior), para corrigir a vulnerabilidade baixa do `@eslint/plugin-kit` (GHSA-xffm-g5w8-qvg7), com `typescript-eslint` 8.71.2, compatível com ela.
