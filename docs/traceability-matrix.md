@@ -8,10 +8,10 @@
 |---|---|
 | Regras funcionais (RN) | 34 |
 | Requisitos não funcionais (NF) | 4 |
-| Questões (Q) / suspeitas (H) | 12 / 12 |
-| Casos de teste | 180 |
+| Questões (Q) / suspeitas (H) | 12 / 17 |
+| Casos de teste | 181 |
 | Cobertura de requisitos (RN/NF com ≥ 1 caso) | 38/38 (100%) |
-| Casos automatizados | 111/180 (62%) |
+| Casos automatizados | 157/181 (87%) |
 
 ### Casos por área e prioridade
 
@@ -23,8 +23,8 @@
 | Integração | [integration.md](test-cases/integration.md) | 15 | 7 / 8 / 0 |
 | Performance | [performance.md](test-cases/performance.md) | 8 | 2 / 3 / 3 |
 | Segurança | [security.md](test-cases/security.md) | 16 | 4 / 7 / 5 |
-| Interface web | [web-e2e.md](test-cases/web-e2e.md) | 45 | 14 / 20 / 11 |
-| **Total** | | **180** | **82 / 72 / 26** |
+| Interface web | [web-e2e.md](test-cases/web-e2e.md) | 46 | 14 / 21 / 11 |
+| **Total** | | **181** | **82 / 73 / 26** |
 
 ### Casos por nível de execução
 
@@ -33,7 +33,7 @@
 | API | 85 |
 | API+DB | 16 |
 | API+FI | 10 |
-| WEB | 39 |
+| WEB | 40 |
 | WEB+MOCK | 5 |
 | ESTÁTICO | 1 |
 | SEC | 15 |
@@ -75,9 +75,9 @@
 | RN-29 | Painel | [CT-WEB-010](test-cases/web-e2e.md), [CT-WEB-011](test-cases/web-e2e.md), [CT-WEB-012](test-cases/web-e2e.md), [CT-WEB-013](test-cases/web-e2e.md) | 1 / 1 / 2 |
 | RN-30 | Catálogo | [CT-WEB-020](test-cases/web-e2e.md), [CT-WEB-021](test-cases/web-e2e.md), [CT-WEB-022](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-024](test-cases/web-e2e.md), [CT-WEB-025](test-cases/web-e2e.md), [CT-WEB-026](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md) | 3 / 4 / 1 |
 | RN-31 | Novo pedido | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-031](test-cases/web-e2e.md), [CT-WEB-032](test-cases/web-e2e.md), [CT-WEB-033](test-cases/web-e2e.md), [CT-WEB-034](test-cases/web-e2e.md), [CT-WEB-035](test-cases/web-e2e.md), [CT-WEB-036](test-cases/web-e2e.md), [CT-WEB-037](test-cases/web-e2e.md), [CT-WEB-038](test-cases/web-e2e.md), [CT-WEB-039](test-cases/web-e2e.md), [CT-WEB-040](test-cases/web-e2e.md), [CT-WEB-041](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-044](test-cases/web-e2e.md), [CT-WEB-045](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md) | 6 / 10 / 1 |
-| RN-32 | Pedidos | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md), [CT-WEB-052](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-054](test-cases/web-e2e.md), [CT-WEB-055](test-cases/web-e2e.md) | 3 / 2 / 2 |
+| RN-32 | Pedidos | [CT-WEB-030](test-cases/web-e2e.md), [CT-WEB-050](test-cases/web-e2e.md), [CT-WEB-051](test-cases/web-e2e.md), [CT-WEB-052](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-054](test-cases/web-e2e.md), [CT-WEB-055](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md) | 3 / 3 / 2 |
 | RN-33 | Idiomas | [CT-WEB-001](test-cases/web-e2e.md), [CT-WEB-060](test-cases/web-e2e.md), [CT-WEB-061](test-cases/web-e2e.md), [CT-WEB-062](test-cases/web-e2e.md), [CT-WEB-063](test-cases/web-e2e.md), [CT-WEB-064](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 2 / 3 / 2 |
-| RN-34 | Erros na interface | [CT-WEB-014](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 0 / 5 / 1 |
+| RN-34 | Erros na interface | [CT-WEB-014](test-cases/web-e2e.md), [CT-WEB-023](test-cases/web-e2e.md), [CT-WEB-042](test-cases/web-e2e.md), [CT-WEB-043](test-cases/web-e2e.md), [CT-WEB-053](test-cases/web-e2e.md), [CT-WEB-056](test-cases/web-e2e.md), [CT-WEB-065](test-cases/web-e2e.md) | 0 / 6 / 1 |
 | NF-01 | Desempenho (SLO proposto) | [CT-PRF-001](test-cases/performance.md), [CT-PRF-002](test-cases/performance.md), [CT-PRF-003](test-cases/performance.md), [CT-PRF-006](test-cases/performance.md), [CT-PRF-008](test-cases/performance.md) | 2 / 2 / 1 |
 | NF-02 | Estabilidade sob carga | [CT-PRF-003](test-cases/performance.md), [CT-PRF-004](test-cases/performance.md), [CT-PRF-005](test-cases/performance.md), [CT-PRF-007](test-cases/performance.md) | 0 / 2 / 2 |
 | NF-03 | Segurança de entrada e exposição | [CT-CAT-019](test-cases/api-catalog.md), [CT-TRV-002](test-cases/api-cross-cutting.md), [CT-TRV-009](test-cases/api-cross-cutting.md), [CT-SEC-002](test-cases/security.md), [CT-SEC-003](test-cases/security.md), [CT-SEC-004](test-cases/security.md), [CT-SEC-006](test-cases/security.md), [CT-SEC-007](test-cases/security.md), [CT-SEC-008](test-cases/security.md), [CT-SEC-009](test-cases/security.md), [CT-SEC-010](test-cases/security.md), [CT-SEC-011](test-cases/security.md), [CT-SEC-014](test-cases/security.md), [CT-SEC-015](test-cases/security.md), [CT-SEC-016](test-cases/security.md) | 4 / 7 / 4 |
@@ -113,6 +113,11 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | H-10 | O createdAt devolvido na criação difere do persistido e devolvido nas consultas. | [CT-ORD-017](test-cases/api-orders.md) |
 | H-11 | Falha de IO na resposta do catálogo (timeout de leitura ou conexão interrompida) resulta em 500 INTERNAL_ER… | [CT-TRV-001](test-cases/api-cross-cutting.md), [CT-INT-006](test-cases/integration.md), [CT-INT-007](test-cases/integration.md) |
 | H-12 | Requisições rejeitadas pelo servidor web (Tomcat), antes da aplicação, respondem página HTML sem envelope e… | [CT-CAT-007](test-cases/api-catalog.md) |
+| H-13 | O front-end deixa de alcançar o order-service após um redeploy dele: /api/orders responde 502 (ou é encamin… | [CT-WEB-056](test-cases/web-e2e.md) |
+| H-14 | O diálogo "Descartar pedido?" é exibido vazio (sem título, mensagem e rótulos dos botões) e confirmar não s… | [CT-WEB-044](test-cases/web-e2e.md) |
+| H-15 | A paginação da listagem transborda: com muitas páginas, os primeiros links (e a seta "anterior") ficam fora… | [CT-WEB-051](test-cases/web-e2e.md) |
+| H-16 | No detalhe do pedido, a região rolável da tabela de itens não é acessível por teclado. | [CT-WEB-070](test-cases/web-e2e.md) |
+| H-17 | Em espanhol, valores de 4 dígitos são agrupados (3.500,00 BRL), divergindo da regra do CLDR para es (3500,0… | [CT-WEB-061](test-cases/web-e2e.md) |
 
 ## Casos → requisitos e automação
 
@@ -253,48 +258,49 @@ Uma suspeita (H) só vira Issue quando o caso indicado a reproduz.
 | [CT-SEC-014](test-cases/security.md) | Ausência de limitação de taxa | NF-03 | P3 | SEC | ⏳ Planejado |
 | [CT-SEC-015](test-cases/security.md) | Varredura dinâmica (DAST) | NF-03 | P2 | DAST | ⏳ Planejado |
 | [CT-SEC-016](test-cases/security.md) | Componentes vulneráveis (SCA) | NF-03 | P3 | SEC | ⏳ Planejado |
-| [CT-WEB-001](test-cases/web-e2e.md) | Idioma padrão na primeira visita | RN-33, RN-28, Q-11 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-002](test-cases/web-e2e.md) | Navegação pelo menu lateral | RN-28 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-003](test-cases/web-e2e.md) | Rota inexistente | RN-28 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-010](test-cases/web-e2e.md) | Indicadores coerentes com a API | RN-29 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-011](test-cases/web-e2e.md) | Atalhos do painel | RN-29 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-012](test-cases/web-e2e.md) | Aviso de indicadores indisponíveis | RN-29 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-013](test-cases/web-e2e.md) | Painel sem pedidos | RN-29 | P3 | WEB+MOCK | ⏳ Planejado |
-| [CT-WEB-014](test-cases/web-e2e.md) | Erro de API no painel | RN-34 | P2 | WEB+MOCK | ⏳ Planejado |
-| [CT-WEB-020](test-cases/web-e2e.md) | Consulta individual | RN-30 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-021](test-cases/web-e2e.md) | Consulta em lote com situações diferentes | RN-30, RN-08 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-022](test-cases/web-e2e.md) | Lote com ID inexistente | RN-30 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-023](test-cases/web-e2e.md) | Consulta individual de ID inexistente | RN-30, RN-34 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-024](test-cases/web-e2e.md) | Campo obrigatório | RN-30 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-025](test-cases/web-e2e.md) | Separadores e duplicatas | RN-30 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-026](test-cases/web-e2e.md) | Limite do lote na interface | RN-30, RN-20 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-030](test-cases/web-e2e.md) | Criação de pedido com desconto (fluxo principal) | RN-31, RN-32, RN-13 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-031](test-cases/web-e2e.md) | Criação abaixo do mínimo de desconto | RN-31, RN-13 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-032](test-cases/web-e2e.md) | Campos do cliente obrigatórios | RN-31, RN-01 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-033](test-cases/web-e2e.md) | E-mail inválido | RN-31, RN-01 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-034](test-cases/web-e2e.md) | Adicionar produto inexistente | RN-31, RN-07 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-035](test-cases/web-e2e.md) | Adicionar produto inativo | RN-31, RN-07 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-036](test-cases/web-e2e.md) | Adicionar produto sem preço vigente | RN-31, RN-07, RN-08 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-037](test-cases/web-e2e.md) | Adicionar produto já incluído | RN-31, RN-04 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-038](test-cases/web-e2e.md) | Limites de quantidade na interface | RN-31, RN-03 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-039](test-cases/web-e2e.md) | Edição de quantidade recalcula valores exibidos | RN-31 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-040](test-cases/web-e2e.md) | Remoção de itens | RN-31 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-041](test-cases/web-e2e.md) | Criar sem itens | RN-31, RN-02 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-042](test-cases/web-e2e.md) | Erro de regra de negócio na criação | RN-31, RN-34 | P2 | WEB+MOCK | ⏳ Planejado |
-| [CT-WEB-043](test-cases/web-e2e.md) | Catálogo indisponível na criação | RN-31, RN-34, RN-10 | P2 | WEB+MOCK | ⏳ Planejado |
-| [CT-WEB-044](test-cases/web-e2e.md) | Cancelar com e sem dados | RN-31 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-045](test-cases/web-e2e.md) | Duplo clique em "Criar pedido" | RN-31 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-050](test-cases/web-e2e.md) | Pedido recém-criado no topo da lista | RN-32, RN-17 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-051](test-cases/web-e2e.md) | Paginação | RN-32, RN-17 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-052](test-cases/web-e2e.md) | Detalhe a partir da lista | RN-32, RN-16 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-053](test-cases/web-e2e.md) | Detalhe de pedido inexistente | RN-32, RN-34 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-054](test-cases/web-e2e.md) | Lista vazia | RN-32 | P3 | WEB+MOCK | ⏳ Planejado |
-| [CT-WEB-055](test-cases/web-e2e.md) | Voltar do detalhe | RN-32 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-060](test-cases/web-e2e.md) | Troca de idioma em tempo de execução | RN-33 | P1 | WEB | ⏳ Planejado |
-| [CT-WEB-061](test-cases/web-e2e.md) | Formatação de moeda e data por idioma | RN-33 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-062](test-cases/web-e2e.md) | Preferência de idioma persistida | RN-33 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-063](test-cases/web-e2e.md) | Fluxos principais em cada idioma | RN-33, RN-30, RN-31 | P2 | WEB | ⏳ Planejado |
-| [CT-WEB-064](test-cases/web-e2e.md) | Paridade dos arquivos de tradução | RN-33 | P3 | ESTÁTICO | ⏳ Planejado |
-| [CT-WEB-065](test-cases/web-e2e.md) | Mensagens de erro traduzidas | RN-33, RN-34 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-070](test-cases/web-e2e.md) | Varredura automática de acessibilidade | NF-04 | P3 | WEB | ⏳ Planejado |
-| [CT-WEB-071](test-cases/web-e2e.md) | Operação só por teclado | NF-04 | P3 | WEB | ⏳ Planejado |
+| [CT-WEB-001](test-cases/web-e2e.md) | Idioma padrão na primeira visita | RN-33, RN-28, Q-11 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-002](test-cases/web-e2e.md) | Navegação pelo menu lateral | RN-28 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-003](test-cases/web-e2e.md) | Rota inexistente | RN-28 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-010](test-cases/web-e2e.md) | Indicadores coerentes com a API | RN-29 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-011](test-cases/web-e2e.md) | Atalhos do painel | RN-29 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-012](test-cases/web-e2e.md) | Aviso de indicadores indisponíveis | RN-29 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-013](test-cases/web-e2e.md) | Painel sem pedidos | RN-29 | P3 | WEB+MOCK | ✅ Automatizado |
+| [CT-WEB-014](test-cases/web-e2e.md) | Erro de API no painel | RN-34 | P2 | WEB+MOCK | ✅ Automatizado |
+| [CT-WEB-020](test-cases/web-e2e.md) | Consulta individual | RN-30 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-021](test-cases/web-e2e.md) | Consulta em lote com situações diferentes | RN-30, RN-08 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-022](test-cases/web-e2e.md) | Lote com ID inexistente | RN-30 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-023](test-cases/web-e2e.md) | Consulta individual de ID inexistente | RN-30, RN-34 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-024](test-cases/web-e2e.md) | Campo obrigatório | RN-30 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-025](test-cases/web-e2e.md) | Separadores e duplicatas | RN-30 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-026](test-cases/web-e2e.md) | Limite do lote na interface | RN-30, RN-20 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-030](test-cases/web-e2e.md) | Criação de pedido com desconto (fluxo principal) | RN-31, RN-32, RN-13 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-031](test-cases/web-e2e.md) | Criação abaixo do mínimo de desconto | RN-31, RN-13 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-032](test-cases/web-e2e.md) | Campos do cliente obrigatórios | RN-31, RN-01 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-033](test-cases/web-e2e.md) | E-mail inválido | RN-31, RN-01 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-034](test-cases/web-e2e.md) | Adicionar produto inexistente | RN-31, RN-07 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-035](test-cases/web-e2e.md) | Adicionar produto inativo | RN-31, RN-07 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-036](test-cases/web-e2e.md) | Adicionar produto sem preço vigente | RN-31, RN-07, RN-08 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-037](test-cases/web-e2e.md) | Adicionar produto já incluído | RN-31, RN-04 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-038](test-cases/web-e2e.md) | Limites de quantidade na interface | RN-31, RN-03 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-039](test-cases/web-e2e.md) | Edição de quantidade recalcula valores exibidos | RN-31 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-040](test-cases/web-e2e.md) | Remoção de itens | RN-31 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-041](test-cases/web-e2e.md) | Criar sem itens | RN-31, RN-02 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-042](test-cases/web-e2e.md) | Erro de regra de negócio na criação | RN-31, RN-34 | P2 | WEB+MOCK | ✅ Automatizado |
+| [CT-WEB-043](test-cases/web-e2e.md) | Catálogo indisponível na criação | RN-31, RN-34, RN-10 | P2 | WEB+MOCK | ✅ Automatizado |
+| [CT-WEB-044](test-cases/web-e2e.md) | Cancelar com e sem dados | RN-31, H-14 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-045](test-cases/web-e2e.md) | Duplo clique em "Criar pedido" | RN-31 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-050](test-cases/web-e2e.md) | Pedido recém-criado no topo da lista | RN-32, RN-17 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-051](test-cases/web-e2e.md) | Paginação | RN-32, RN-17, H-15 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-052](test-cases/web-e2e.md) | Detalhe a partir da lista | RN-32, RN-16 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-053](test-cases/web-e2e.md) | Detalhe de pedido inexistente | RN-32, RN-34 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-054](test-cases/web-e2e.md) | Lista vazia | RN-32 | P3 | WEB+MOCK | ✅ Automatizado |
+| [CT-WEB-055](test-cases/web-e2e.md) | Voltar do detalhe | RN-32 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-056](test-cases/web-e2e.md) | Lista de pedidos continua disponível após redeploy do order-service | RN-32, RN-34, H-13 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-060](test-cases/web-e2e.md) | Troca de idioma em tempo de execução | RN-33 | P1 | WEB | ✅ Automatizado |
+| [CT-WEB-061](test-cases/web-e2e.md) | Formatação de moeda e data por idioma | RN-33, H-17 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-062](test-cases/web-e2e.md) | Preferência de idioma persistida | RN-33 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-063](test-cases/web-e2e.md) | Fluxos principais em cada idioma | RN-33, RN-30, RN-31 | P2 | WEB | ✅ Automatizado |
+| [CT-WEB-064](test-cases/web-e2e.md) | Paridade dos arquivos de tradução | RN-33 | P3 | ESTÁTICO | ✅ Automatizado |
+| [CT-WEB-065](test-cases/web-e2e.md) | Mensagens de erro traduzidas | RN-33, RN-34 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-070](test-cases/web-e2e.md) | Varredura automática de acessibilidade | NF-04, H-16 | P3 | WEB | ✅ Automatizado |
+| [CT-WEB-071](test-cases/web-e2e.md) | Operação só por teclado | NF-04 | P3 | WEB | ✅ Automatizado |

@@ -11,7 +11,7 @@ Desafio técnico **COE Leader — QA / Testes** (Stefanini Group): estratégia, 
 | Estrutura | Repositório, GitFlow, integridade do SUT, ADRs de stack | ✅ Concluída |
 | 1 | Estratégia, plano, especificação (SDD), casos de teste, rastreabilidade gerada e validada por script | ✅ Concluída |
 | 2 | Automação de API (Java + RestAssured): 111 casos, injeção de falhas, 9 defeitos confirmados | ✅ Concluída |
-| 3 | Automação de front-end (Playwright) | ⏳ Planejada |
+| 3 | Automação de front-end (Playwright): 46 casos, pt-BR/en/es, acessibilidade, 5 defeitos confirmados | ✅ Concluída |
 | 4 | Performance (k6) e quality gates no CI/CD | ⏳ Planejada |
 | 5 | Relatório de execução, Issues de defeito, resumo de qualidade | ⏳ Planejada |
 | Diferenciais | IA aplicada, segurança, governança, dimensionamento | ⏳ Em andamento (log de IA ativo) |
@@ -34,6 +34,7 @@ docs/
   ai-usage.md            Uso de IA: ferramenta, prompts, decisões e validações
 tests/
   api/                   Suíte de API (Java 17, JUnit 5, RestAssured) — ver tests/api/README.md
+  web/                   Suíte E2E (Playwright + TypeScript, axe-core) — ver tests/web/README.md
   infra/                 Override do Compose com o proxy de injeção de falhas
 .github/                 Templates de PR e de Issue de defeito (workflows na Parte 4)
 ```
@@ -95,7 +96,17 @@ mvn test -DexcludedGroups=defeito-conhecido   # visão do gate: 100% deve passar
 node ../../scripts/summarize-junit.mjs target/surefire-reports --failures
 ```
 
-Web e performance: instruções adicionadas nas Partes 3 e 4.
+**Web** (detalhes em [tests/web/README.md](tests/web/README.md); suba o ambiente do zero — ver H-13):
+
+```bash
+cd tests/web
+npm ci && npx playwright install chromium
+npm test                 # completa: 51 execuções; defeitos conhecidos falham de propósito
+npm run test:gate        # visão do gate: 100% deve passar
+npm run report           # relatório HTML com trace, screenshot e vídeo das falhas
+```
+
+Performance: instruções adicionadas na Parte 4.
 
 ## Documentação
 
@@ -107,6 +118,7 @@ Web e performance: instruções adicionadas nas Partes 3 e 4.
 | [Casos de teste](docs/test-cases/README.md) | 180 casos por área, com técnica, prioridade e nível de execução |
 | [Matriz de rastreabilidade](docs/traceability-matrix.md) | Requisitos ↔ casos ↔ automação (gerada por `scripts/traceability.mjs`) |
 | [Execução da suíte de API](docs/test-execution/api-2026-10-29.md) | Resultado, estabilidade (3 execuções idênticas) e defeitos confirmados |
+| [Execução da suíte web](docs/test-execution/web-2026-10-29.md) | Resultado, estabilidade, prova de oráculo e defeitos da interface |
 | [Uso de IA](docs/ai-usage.md) | Ferramenta, motivo, prompts, decisões e validações por etapa |
 | [ADRs do projeto de qualidade](docs/adr/) | Estrutura do repositório, stacks (API, web, performance), SDD, injeção de falhas e dados |
 | [Guia de contribuição](CONTRIBUTING.md) | GitFlow, commits, PRs e registro de defeitos |
